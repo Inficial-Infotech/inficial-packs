@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="facebook_app_id">579053182739207</string>
+    <string name="fb_login_protocol_scheme">280a8957aa0f08135cac6629146a9e90</string>
+    <string name="app_name">Packs App</string>
+</resources>
