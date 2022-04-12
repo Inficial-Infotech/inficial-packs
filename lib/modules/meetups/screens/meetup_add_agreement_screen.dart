@@ -91,6 +91,9 @@ class _MeetupAddAgreementScreenState extends State<MeetupAddAgreementScreen> {
                             maxNumberOfParticipants: meetUpCubit.state.maxNumberOfParticipants,
                             coverImageURL: meetUpCubit.state.coverImageURL,
                             imageURLs: meetUpCubit.state.imageURLs,
+                            address: meetUpCubit.state.address,
+                            lat: meetUpCubit.state.lat,
+                            lng: meetUpCubit.state.lng,
                           );
 
                       Navigator.pushAndRemoveUntil(

@@ -149,11 +149,12 @@ class _MeetupAddGenderAgeScreenState extends State<MeetupAddGenderAgeScreen> {
   }
 
   void navigateToMeetupAddCoverImageScreen(BuildContext context) {
+
     Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (BuildContext ctx) => RepositoryProvider<MeetupRepository>(
-          create: (BuildContext context) => MeetupRepository(),
+        builder: (BuildContext ctx) => RepositoryProvider<MeetupRepository>.value(
+          value: context.read<MeetupRepository>(),
           child: BlocProvider<MeetUpCubit>.value(
             value: BlocProvider.of<MeetUpCubit>(context),
             child: const MeetupAddCoverImageScreen(),

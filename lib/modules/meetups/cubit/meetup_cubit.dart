@@ -59,6 +59,10 @@ class MeetUpCubit extends Cubit<MeetUpState> {
     );
   }
 
+  void setArea(String address, double lat, double lng) {
+    emit(state.copyWith(address: address,lat: lat,lng: lng));
+  }
+
   Future<UploadImageDetails> uploadFile(String identifier, String imageName) async {
     try {
       final String? filePath = await FlutterAbsolutePath.getAbsolutePath(identifier);

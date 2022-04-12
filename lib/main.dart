@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:packs/bloc/root_bloc.dart';
 import 'package:packs/constants/app_constants.dart';
@@ -43,6 +44,11 @@ class PACKS extends StatelessWidget {
             RootBloc(authenticationRepository: _authenticationRepository)
               ..add(RootUserFetch()),
         child: CupertinoApp(
+          localizationsDelegates: [
+            DefaultMaterialLocalizations.delegate,
+            DefaultCupertinoLocalizations.delegate,
+            DefaultWidgetsLocalizations.delegate,
+          ],
           title: 'PACKS',
           home: Root(
               authenticationRepository: _authenticationRepository, key: key),

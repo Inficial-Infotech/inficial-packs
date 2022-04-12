@@ -15,6 +15,9 @@ class MeetUpState extends Equatable {
     this.minAge = 0,
     this.maxAge = 0,
     this.maxNumberOfParticipants = 0,
+    this.lng = 0.0,
+    this.address = '',
+    this.lat = 0.0
   });
 
   String category;
@@ -26,6 +29,9 @@ class MeetUpState extends Equatable {
   String endTime;
   String gender;
   String coverImageURL;
+  String address;
+  double lat;
+  double lng;
   List<String> imageURLs;
   int minAge;
   int maxAge;
@@ -46,6 +52,9 @@ class MeetUpState extends Equatable {
         imageURLs,
         maxNumberOfParticipants,
         coverImageURL,
+        address,
+        lat,
+        lng,
       ];
 
   MeetUpState copyWith({
@@ -58,6 +67,9 @@ class MeetUpState extends Equatable {
     String? endTime,
     String? gender,
     String? coverImageURL,
+    String? address,
+    double? lat,
+    double? lng,
     List<String>? imageURLs,
     int? minAge,
     int? maxAge,
@@ -74,6 +86,9 @@ class MeetUpState extends Equatable {
       minAge: minAge ?? this.minAge,
       gender: gender ?? this.gender,
       maxAge: maxAge ?? this.maxAge,
+      address: address ?? this.address,
+      lat: lat ?? this.lat,
+      lng: lng ?? this.lng,
       maxNumberOfParticipants: maxNumberOfParticipants ?? this.maxNumberOfParticipants,
       coverImageURL: coverImageURL ?? this.coverImageURL,
       imageURLs: imageURLs ?? this.imageURLs,

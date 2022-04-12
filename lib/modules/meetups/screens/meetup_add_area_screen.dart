@@ -1,15 +1,18 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geocoding/geocoding.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
+import 'package:google_maps_webservice/src/places.dart';
 import 'package:packs/constants/app_constants.dart';
 import 'package:packs/modules/meetups/cubit/meetup_cubit.dart';
+import 'package:packs/modules/meetups/repository/meetup_repository.dart';
 import 'package:packs/modules/meetups/screens/meetup_add_gender_age_screen.dart';
 import 'package:packs/widgets/components/bar_button.dart';
 import 'package:packs/widgets/components/explore_map.dart';
@@ -26,11 +29,12 @@ class MeetupAddAreaScreen extends StatefulWidget {
 class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
   late MeetUpCubit meetUpCubit;
   late GoogleMapController mapController;
-  LatLng initialPosition = LatLng(37.773972, -122.431297);
-  List<Marker> customMarkers = [];
-  String? area = "Select City";
+  LatLng initialPosition = const LatLng(37.773972, -122.431297);
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  String? area = 'Select City';
   LatLng? markerPosition;
   BitmapDescriptor? customIcon;
+  String kGoogleApiKey = 'AIzaSyCB1I6C9IOuzLMSW0ddQXaok4kKv4siCQ4';
 
 
   @override
@@ -42,29 +46,28 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
   Future<void> _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
     mapController.setMapStyle(Utils.mapStyle);
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(12, 12)),
+    BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(12, 12)),
         'assets/icon/marker.png')
-        .then((d) {
+        .then((BitmapDescriptor d) {
       customIcon = d;
     });
-    // TODO: Nicht auf die eigene, sondern auf die Position des ersten Deals gehen
-    Position position = await _determinePosition();
+    final Position position = await _determinePosition();
     markerPosition = LatLng(position.latitude, position.longitude);
-  Marker marker =  Marker(
+    final Marker marker =  Marker(
         onTap: () {
-          print('Tapped');
+          if (kDebugMode) {
+            print('Tapped');
+          }
         },
         draggable: true,
-        markerId: MarkerId('Marker'),
+        markerId: const MarkerId('Marker'),
         position: LatLng(markerPosition!.latitude, markerPosition!.longitude),
         icon: customIcon!,
-        onDragEnd: ((newPosition) {
-          // markerPosition = newPosition;
+        onDragEnd: (LatLng newPosition) {
+          markerPosition = newPosition;
           getUserLocation(newPosition);
-          print(newPosition.latitude);
-          print(newPosition.longitude);
-        }));
-    customMarkers.add(marker);
+        });
+    markers[const MarkerId('Marker')] = marker;
     setState(() {
 
     });
@@ -74,8 +77,9 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
             target: LatLng(position.latitude, position.longitude), zoom: 1),
       ),
     );
-
   }
+
+
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -113,22 +117,54 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
     return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
   getUserLocation(LatLng latLng) async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
-    print(placemarks.first.toJson());
-    area = placemarks.first.subLocality.toString() + ", " +placemarks.first.street.toString() + ", " + placemarks.first.locality.toString();
-    setState(() {
-
+    await context.read<MeetupRepository>().getDetailsFromCoordinates(latLng, kGoogleApiKey).then((response) {
+      log(response.toString());
+      if (response != null) {
+        area = response[0]['formatted_address'].toString();
+        (response as List).forEach((element) {
+          if ((element['types'] as List).contains('route')) {
+            area = element['formatted_address'].toString();
+          }
+        });
+        setState(() {
+        });
+      }
     });
   }
+
+  updateMarker(){
+    final Marker marker = markers.values.toList().firstWhere((Marker item) => item.markerId == const MarkerId('Marker'));
+
+    Marker _marker =  Marker(
+        onTap: () {
+          if (kDebugMode) {
+            print('Tapped');
+          }
+        },
+        draggable: true,
+        markerId: const MarkerId('Marker'),
+        position: LatLng(markerPosition!.latitude, markerPosition!.longitude),
+        icon: customIcon!,
+        onDragEnd: (LatLng newPosition) {
+          markerPosition = newPosition;
+          getUserLocation(newPosition);
+        });
+
+    setState(() {
+      //the marker is identified by the markerId and not with the index of the list
+      markers[const MarkerId('Marker')] = _marker;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
 
-      body:SafeArea(
+      body:SingleChildScrollView(
+        child: SafeArea(
 
-        child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -155,7 +191,7 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
                 ],
               ),
               Container(
-                margin: EdgeInsets.only(left: 20,top: 10,right: 20),
+                margin: const EdgeInsets.only(left: 20,top: 10,right: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -170,25 +206,51 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
                          const Text('Pick a rough area',style: TextStyle(fontSize: 15,fontWeight: FontWeight.normal),),                      ],
                     ),
                     const SizedBox(height: 16,),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: const BoxDecoration(
-                        color: PXColor.boxColor,
-                          borderRadius: BorderRadius.all(Radius.circular(12))
+                    GestureDetector(
+                      onTap: () async {
+                        await PlacesAutocomplete.show(
+                            context: context,
+                            apiKey: kGoogleApiKey,
+                            language: 'en',
+                            types: [''],
+                            components: [],
+                            strictbounds: false,
+                            mode: Mode.overlay, // Mode.fullscreen
+                         ).then((Prediction? value) async {
+                          await context.read<MeetupRepository>().getDetailsFromPalaceId(value!.placeId, kGoogleApiKey).then((response) {
+                            if (response != null) {
+                              area = response['formatted_address'].toString();
+                              markerPosition = LatLng(double.parse(response['geometry']['location']['lat'].toString()), double.parse(response['geometry']['location']['lng'].toString()));
+                              mapController.animateCamera(
+                                CameraUpdate.newCameraPosition(
+                                  CameraPosition(
+                                      target: markerPosition!, zoom: 10),
+                                ),
+                              );
+                              updateMarker();
+                            }
+                          });
+                        });
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: const BoxDecoration(
+                          color: PXColor.boxColor,
+                            borderRadius: BorderRadius.all(Radius.circular(12))
 
+                        ),
+                        padding: const EdgeInsets.all(20),
+                        child: Text(area!,),
                       ),
-                      padding: EdgeInsets.all(20),
-                      child: Text(area!,),
                     ),
                     const SizedBox(height: 16,),
-                    Container(
+                    SizedBox(
                       height: 280,
-                      
                       child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderRadius: const BorderRadius.all(Radius.circular(12)),
                         child: GoogleMap(
                           initialCameraPosition: CameraPosition(target: initialPosition, zoom: 1),
-                          markers: customMarkers.toSet(),
+                          markers: markers.values.toSet(),
                           myLocationEnabled: true,
                           gestureRecognizers: Set()
                             ..add(Factory<PanGestureRecognizer>(() => PanGestureRecognizer()))
@@ -202,9 +264,14 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
                     const SizedBox(height: 16,),
                     const Text('Press and hold to drop your pin',style: TextStyle(fontSize: 15,fontWeight: FontWeight.normal),),
                     const SizedBox(height: 50,),
-                    Container(
+                    SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: CupertinoButton(onPressed: () {
+                          if (area! == '') {
+                            return;
+                          } else {
+                            meetUpCubit.setArea(area!, markerPosition!.latitude, markerPosition!.longitude);
+                          }
                           navigateToMeetupAddGenderAgeScreen(context);
                         } ,color: PXColor.black,borderRadius: const BorderRadius.all(Radius.circular(25)),child: const Text('Next'),))
                   ],
@@ -217,12 +284,16 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
     );
   }
   void navigateToMeetupAddGenderAgeScreen(BuildContext context) {
+
     Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (BuildContext ctx) => BlocProvider<MeetUpCubit>.value(
-          value: BlocProvider.of<MeetUpCubit>(context),
-          child: const MeetupAddGenderAgeScreen(),
+        builder: (BuildContext ctx) => RepositoryProvider<MeetupRepository>.value(
+          value: context.read<MeetupRepository>(),
+          child: BlocProvider<MeetUpCubit>.value(
+            value: BlocProvider.of<MeetUpCubit>(context),
+            child: const MeetupAddGenderAgeScreen(),
+          ),
         ),
       ),
     );

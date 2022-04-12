@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 import 'package:packs/api/rest_api_service.dart';
 
@@ -20,6 +21,9 @@ class MeetupRepository {
     required int maxAge,
     required int maxNumberOfParticipants,
     required String coverImageURL,
+    required String address,
+    required double lat,
+    required double lng,
     required List<String> imageURLs,
   }) async {
     try {
@@ -38,6 +42,9 @@ class MeetupRepository {
         'noOfPeople': maxNumberOfParticipants,
         'coverImageURL': coverImageURL,
         'ImagesURL': imageURLs,
+        'address': address,
+        'lat': lat,
+        'lng': lng,
       };
 
       final Response result = await RestApiService().post('mobile-app/publish-meetups', jsonString);
@@ -58,4 +65,23 @@ class MeetupRepository {
         .doc(DateTime.now().millisecondsSinceEpoch.toString())
         .set({'images': FieldValue.arrayUnion(uploadImageDataList)}, SetOptions(merge: true));
   }
+
+  Future getDetailsFromPalaceId(String? placeId, String? apiKey) async {
+    String url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$apiKey";
+    final Response result = await RestApiService().get(url,forceUrl: true);
+    if (result.statusCode == 200) {
+      return json.decode(result.body)['result'];
+    }
+    return null;
+  }
+
+  Future getDetailsFromCoordinates(LatLng latLng, String? apiKey) async {
+    String url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng.latitude},${latLng.longitude}&key=$apiKey";
+    final Response result = await RestApiService().get(url,forceUrl: true);
+    if (result.statusCode == 200) {
+      return json.decode(result.body)['results'];
+    }
+    return null;
+  }
+
 }

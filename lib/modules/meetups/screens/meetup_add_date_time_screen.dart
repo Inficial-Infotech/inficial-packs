@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:packs/modules/meetups/cubit/meetup_cubit.dart';
+import 'package:packs/modules/meetups/repository/meetup_repository.dart';
 import 'package:packs/modules/meetups/screens/meetup_add_area_screen.dart';
 import 'package:packs/modules/meetups/screens/meetup_add_gender_age_screen.dart';
 
@@ -145,9 +146,12 @@ class _MeetupAddDateTimeScreenState extends State<MeetupAddDateTimeScreen> {
                     context: context,
                     topRadius: Radius.circular(25),
                     barrierColor: Colors.black,
-                    builder: (ct) => BlocProvider<MeetUpCubit>.value(
-                      value: BlocProvider.of<MeetUpCubit>(context),
-                      child: const MeetupAddAreaScreen(),
+                    builder: (ct) => RepositoryProvider<MeetupRepository>(
+                      create: (BuildContext context) => MeetupRepository(),
+                      child: BlocProvider<MeetUpCubit>.value(
+                        value: BlocProvider.of<MeetUpCubit>(context),
+                        child: const MeetupAddAreaScreen(),
+                      ),
                     ),
                   );
                 },
