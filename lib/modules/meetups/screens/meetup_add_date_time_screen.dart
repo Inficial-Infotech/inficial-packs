@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:packs/modules/meetups/cubit/meetup_cubit.dart';
+import 'package:packs/modules/meetups/screens/meetup_add_area_screen.dart';
 import 'package:packs/modules/meetups/screens/meetup_add_gender_age_screen.dart';
 
 class MeetupAddDateTimeScreen extends StatefulWidget {
@@ -139,7 +141,15 @@ class _MeetupAddDateTimeScreenState extends State<MeetupAddDateTimeScreen> {
                     endDateController.text,
                     endTimeController.text,
                   );
-                  navigateToMeetupAddGenderAgeScreen(context);
+                  showCupertinoModalBottomSheet(
+                    context: context,
+                    topRadius: Radius.circular(25),
+                    barrierColor: Colors.black,
+                    builder: (ct) => BlocProvider<MeetUpCubit>.value(
+                      value: BlocProvider.of<MeetUpCubit>(context),
+                      child: const MeetupAddAreaScreen(),
+                    ),
+                  );
                 },
                 child: const Text('Next'),
               ),
@@ -156,11 +166,11 @@ class _MeetupAddDateTimeScreenState extends State<MeetupAddDateTimeScreen> {
       context: context,
       builder: (_) => Container(
         height: 300,
-        color: Colors.black,
+        color: Colors.white,
         child: CupertinoDatePicker(
           mode: CupertinoDatePickerMode.date,
           initialDateTime: DateTime.now(),
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.white,
           onDateTimeChanged: (DateTime dateTime) {
             selectDate = '${dateTime.day}/${dateTime.month}/${dateTime.year}';
           },
@@ -176,7 +186,7 @@ class _MeetupAddDateTimeScreenState extends State<MeetupAddDateTimeScreen> {
       context: context,
       builder: (_) => Container(
         height: 300,
-        color: Colors.black,
+        color: Colors.white,
         child: CupertinoDatePicker(
           mode: CupertinoDatePickerMode.time,
           initialDateTime: DateTime.now(),
@@ -189,15 +199,5 @@ class _MeetupAddDateTimeScreenState extends State<MeetupAddDateTimeScreen> {
     return selectTime;
   }
 
-  void navigateToMeetupAddGenderAgeScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      CupertinoPageRoute(
-        builder: (BuildContext ctx) => BlocProvider<MeetUpCubit>.value(
-          value: BlocProvider.of<MeetUpCubit>(context),
-          child: const MeetupAddGenderAgeScreen(),
-        ),
-      ),
-    );
-  }
+
 }

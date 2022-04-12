@@ -21,7 +21,6 @@ class UserRepository {
     await userCollectionReference.doc(uid).get().then((snapshot) => {
           userData = snapshot.data(),
         });
-
     return userData;
   }
 }

@@ -73,16 +73,16 @@ class PhoneNumberUtil {
     required String phoneNumber,
     required String isoCode,
   }) async {
-    Map<dynamic, dynamic> result =
+    Map<dynamic, dynamic>? result =
         await (_channel.invokeMethod('getRegionInfo', {
       'phone_number': phoneNumber,
       'iso_code': isoCode,
     }));
 
     return RegionInfo(
-      regionPrefix: result['regionCode'],
-      isoCode: result['isoCode'],
-      formattedPhoneNumber: result['formattedPhoneNumber'],
+      regionPrefix: result!['regionCode'].toString(),
+      isoCode: result['isoCode'].toString(),
+      formattedPhoneNumber: result['formattedPhoneNumber'].toString(),
     );
   }
 

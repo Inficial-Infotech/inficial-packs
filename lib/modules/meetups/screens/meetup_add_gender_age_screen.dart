@@ -100,6 +100,7 @@ class _MeetupAddGenderAgeScreenState extends State<MeetupAddGenderAgeScreen> {
                 height: 60,
               ),
               CupertinoButton.filled(
+
                 onPressed: () {
                   if (selectedValue.isEmpty ||
                       startAgeController.text.isEmpty ||
@@ -130,7 +131,7 @@ class _MeetupAddGenderAgeScreenState extends State<MeetupAddGenderAgeScreen> {
       builder: (BuildContext builder) {
         return Container(
           height: MediaQuery.of(context).copyWith().size.height * 0.25,
-          color: Colors.black,
+          color: Colors.white,
           child: CupertinoPicker(
             onSelectedItemChanged: (int value) {
               selectedValue = genderList[value];

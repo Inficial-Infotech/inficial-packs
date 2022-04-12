@@ -55,7 +55,7 @@ class OtpTextField extends StatelessWidget {
   }
 }
 
-Widget _textFieldOTP({bool? first, last, context, onChange}) {
+Widget _textFieldOTP({bool? first, last, BuildContext? context, onChange}) {
   return Container(
     height: 45,
     child: AspectRatio(
@@ -65,10 +65,10 @@ Widget _textFieldOTP({bool? first, last, context, onChange}) {
         onChanged: (value) {
           onChange(value);
           if (value.length == 1 && last == false) {
-            FocusScope.of(context).nextFocus();
+            FocusScope.of(context!).nextFocus();
           }
           if (value.length == 0 && first == false) {
-            FocusScope.of(context).previousFocus();
+            FocusScope.of(context!).previousFocus();
           }
         },
         decoration: BoxDecoration(

@@ -33,16 +33,16 @@ class _DealsListState extends State<DealsList> {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: model.stream,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<List<DealModel>> snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: Text('Loading'));
         } else {
           return ListView.builder(
             controller: widget.scrollController,
-            itemCount: snapshot.data.length! + 1,
+            itemCount: snapshot.data!.length + 1,
             itemBuilder: (BuildContext context, int index) {
-              if (index < snapshot.data.length) {
-                return DealCard(model: snapshot.data[index]);
+              if (index < snapshot.data!.length) {
+                return DealCard(model: snapshot.data![index]);
               } else if (model.hasMore == true) {
                 return const Padding(
                   padding: EdgeInsets.symmetric(vertical: 32.0),

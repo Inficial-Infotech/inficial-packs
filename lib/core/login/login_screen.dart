@@ -15,6 +15,9 @@ import 'package:packs/modules/home/screens/home_screen.dart';
 import 'package:packs/widgets/components/back_button.dart';
 import 'package:packs/widgets/components/flag.dart';
 import 'package:packs/widgets/components/otp_text_field.dart';
+import 'package:user_repository/user_repository.dart';
+import 'package:packs/utils/globals.dart' as globals;
+import 'package:user_repository/user_repository.dart' as user_repo;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -29,12 +32,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final FacebookLogin facebookLogin = FacebookLogin();
+  final UserRepository _userRepository = UserRepository();
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       resizeToAvoidBottomInset: false,
       child: BlocBuilder<LoginCubit, LoginState>(
+
         builder: (BuildContext buildContext, LoginState state) {
           final LoginCubit cubit = context.read<LoginCubit>();
           return SafeArea(
@@ -42,12 +47,17 @@ class _LoginScreenState extends State<LoginScreen> {
               child: state.step != LoginSteps.verifyOtp
                   ? Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: PXSpacing.spacingL, right: PXSpacing.spacingL),
+                  padding: const EdgeInsets.only(
+                      left: PXSpacing.spacingL,
+                      right: PXSpacing.spacingL),
                   child: Column(
                     children: <Widget>[
                       const SizedBox(height: PXSpacing.spacingXXL),
                       Row(
-                        mainAxisAlignment: state.step == LoginSteps.generateOtp ? MainAxisAlignment.spaceBetween : MainAxisAlignment.end,
+                        mainAxisAlignment:
+                        state.step == LoginSteps.generateOtp
+                            ? MainAxisAlignment.spaceBetween
+                            : MainAxisAlignment.end,
                         children: <Widget>[
                           if (state.step == LoginSteps.generateOtp)
                             PXBackButton(
@@ -191,8 +201,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
                                     final OAuthCredential credential =
                                     await GoogleAuthProvider.credential(idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
-                                    await FirebaseAuth.instance.signInWithCredential(credential);
-                                    await context.read<LoginRepository>().signInWithEmail(googleUser.email);
+                                    try {
+                                      await FirebaseAuth.instance.signInWithEmailAndPassword(email: googleUser.email,password: 'STATIC_PWD');
+                                      final user_repo.User? user = await _userRepository.getUserData(uid: googleUser.id);
+                                      globals.currentUserData = user!;
+                                    } catch (e) {
+                                      if (e.toString().contains('[firebase_auth/wrong-password]')) {
+                                       await FirebaseAuth.instance.signInWithCredential(credential);
+                                        final user_repo.User? user = await _userRepository.getUserData(uid: googleUser.id);
+                                        globals.currentUserData = user!;
+                                      } else {
+                                        showFailureSnackBar('User not found');
+                                      }
+                                    }
+
                                     state.loginType = LoginType.google;
                                     navigateToSelectNameScreen(context);
                                   },
@@ -210,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 const SizedBox(width: PXSpacing.spacingS),
                                 GestureDetector(
                                   onTap: () async {
-                                    _fabebookLogin();
+                                    _fabebookLogin(state);
                                   },
                                   child: Container(
                                     height: 60,
@@ -326,8 +348,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                          'Please enter the 6-digit code sent to you at ${state.loginType == LoginType.email ? state.email : '${state.country
-                              .dialCode}${state.phone}'}',
+                          'Please enter the 6-digit code sent to you at ${state.loginType == LoginType.email ? state.email : '${state.country.dialCode}${state.phone}'}',
                           style: const TextStyle(
                             color: PXColor.grey,
                             fontSize: PXFontSize.body,
@@ -403,16 +424,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 } else {
                                   if (state.emailCode.toString() == state.otp.join('')) {
                                     try {
-                                      UserCredential d =
-                                      await _auth.signInWithEmailAndPassword(email: state.email, password: 'STATIC_PWD');
+                                      UserCredential d = await _auth.signInWithEmailAndPassword(email: state.email, password: 'STATIC_PWD');
                                       cubit.setLoading(false);
                                       navigateToSelectNameScreen(context);
                                     } catch (e) {
                                       try {
-                                        UserCredential data =
-                                        await _auth.createUserWithEmailAndPassword(email: state.email, password: 'STATIC_PWD');
+                                        UserCredential data = await _auth.createUserWithEmailAndPassword(email: state.email, password: 'STATIC_PWD');
                                         navigateToSelectNameScreen(context);
-                                      } catch (e) {} finally {
+                                      } catch (e) {
+                                      } finally {
                                         cubit.setLoading(false);
                                       }
                                     }
@@ -422,7 +442,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   }
                                 }
                               },
-                              child: state.loading ? const CupertinoActivityIndicator(color: PXColor.white) : const Text('Submit'),
+                              child: state.loading
+                                  ? const CupertinoActivityIndicator(
+                                  color: PXColor.white)
+                                  : const Text('Submit'),
                             ),
                           )
                         ],
@@ -438,7 +461,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<void> _fabebookLogin() async {
+  Future<void> _fabebookLogin(LoginState state) async {
     final FacebookLoginResult res = await facebookLogin.logIn(permissions: [
       FacebookPermission.publicProfile,
       FacebookPermission.email,
@@ -446,7 +469,9 @@ class _LoginScreenState extends State<LoginScreen> {
     switch (res.status) {
       case FacebookLoginStatus.success:
         final FacebookAccessToken? accessToken = res.accessToken;
-        final String token = accessToken?.token ?? "";
+        final String token = accessToken?.token ?? '';
+        log('face book access token : $token');
+        log('face book access token2: ${ await facebookLogin.accessToken}');
 
         final FacebookUserProfile? profile = await facebookLogin.getUserProfile();
         final String? userProfile = profile?.userId;
@@ -454,6 +479,25 @@ class _LoginScreenState extends State<LoginScreen> {
 
         final String? email = await facebookLogin.getUserEmail();
         if (email != null) final String userEmail = email;
+        state.email = email!;
+        state.name = userName!;
+        state.userId = profile!.userId;
+
+        final OAuthCredential credential =
+        FacebookAuthProvider.credential(token);
+
+        try {
+          await FirebaseAuth.instance.signInWithEmailAndPassword(email: email,password: 'STATIC_PWD');
+        } catch (e) {
+          if (e.toString().contains('[firebase_auth/wrong-password]')) {
+            await FirebaseAuth.instance.signInWithCredential(credential);
+          } else {
+            showFailureSnackBar('User not found');
+          }
+        }
+
+        state.loginType = LoginType.facebook;
+        navigateToSelectNameScreen(context);
         break;
       case FacebookLoginStatus.cancel:
         break;
@@ -498,54 +542,53 @@ void _showPicker(BuildContext ctx, List<Country> countries, Country? country, Fu
   int index = countries.indexOf(country!);
   showCupertinoModalPopup(
       context: ctx,
-      builder: (BuildContext context) =>
-          CupertinoActionSheet(
-            actions: <Widget>[
-              SizedBox(
-                height: 250,
-                child: CupertinoPicker(
-                  backgroundColor: Colors.white,
-                  itemExtent: 60,
-                  scrollController: FixedExtentScrollController(initialItem: index),
-                  children: <Widget>[
-                    for (Country item in countries)
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          const SizedBox(width: PXSpacing.spacingS),
-                          Flag(
-                            country: item,
-                          ),
-                          const SizedBox(width: PXSpacing.spacingM),
-                          Text(
-                            item.dialCode ?? '',
-                            textDirection: TextDirection.ltr,
-                          ),
-                        ],
+      builder: (BuildContext context) => CupertinoActionSheet(
+        actions: <Widget>[
+          SizedBox(
+            height: 250,
+            child: CupertinoPicker(
+              backgroundColor: Colors.white,
+              itemExtent: 60,
+              scrollController: FixedExtentScrollController(initialItem: index),
+              children: <Widget>[
+                for (Country item in countries)
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const SizedBox(width: PXSpacing.spacingS),
+                      Flag(
+                        country: item,
                       ),
-                  ],
-                  onSelectedItemChanged: (int value) {
-                    index = value;
-                  },
-                ),
-              ),
-              CupertinoActionSheetAction(
-                child: const Text('Save'),
-                onPressed: () {
-                  onSave.call(countries.elementAt(index));
-                  Navigator.pop(context);
-                },
-              ),
-              CupertinoActionSheetAction(
-                child: const Text('Cancel'),
-                onPressed: () {
-                  Navigator.pop(
-                    context,
-                  );
-                },
-              )
-            ],
-          ));
+                      const SizedBox(width: PXSpacing.spacingM),
+                      Text(
+                        item.dialCode ?? '',
+                        textDirection: TextDirection.ltr,
+                      ),
+                    ],
+                  ),
+              ],
+              onSelectedItemChanged: (int value) {
+                index = value;
+              },
+            ),
+          ),
+          CupertinoActionSheetAction(
+            child: const Text('Save'),
+            onPressed: () {
+              onSave.call(countries.elementAt(index));
+              Navigator.pop(context);
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: const Text('Cancel'),
+            onPressed: () {
+              Navigator.pop(
+                context,
+              );
+            },
+          )
+        ],
+      ));
 }
 
 void showFailureSnackBar(String message) {
@@ -556,8 +599,7 @@ void navigateToSelectNameScreen(BuildContext context) {
   Navigator.push(
     context,
     CupertinoPageRoute(
-      builder: (BuildContext ctx) =>
-      RepositoryProvider<LoginRepository>.value(
+      builder: (BuildContext ctx) => RepositoryProvider<LoginRepository>.value(
         value: context.read<LoginRepository>(),
         child: BlocProvider<LoginCubit>.value(
           value: BlocProvider.of<LoginCubit>(context),

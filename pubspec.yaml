@@ -35,7 +35,7 @@ dependencies:
   geolocator: ^8.2.0
   google_maps_flutter: ^2.0.11
   uuid: ^3.0.4
-  modal_bottom_sheet: ^2.0.0
+  modal_bottom_sheet: ^2.0.1
   algolia: ^1.0.1
   tuple: ^2.0.0
   font_awesome_flutter: ^9.1.0
@@ -58,6 +58,7 @@ dependencies:
   sign_in_with_apple: ^3.3.0
   intl: ^0.17.0
   multi_image_picker2: ^5.0.2
+  geocoding: ^2.0.4
   flutter_absolute_path:
     git:
       url: https://github.com/ValeriusGC/flutter_absolute_path.git
@@ -80,6 +81,7 @@ flutter:
     - images/stage.png
     - assets/flags/
     - assets/images/
+    - assets/icon/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

@@ -81,7 +81,7 @@ class _MeetupsAddMeetupScreen extends State<MeetupsAddCategoryScreen> {
       builder: (BuildContext builder) {
         return Container(
           height: MediaQuery.of(context).copyWith().size.height * 0.25,
-          color: Colors.black,
+          color: Colors.white,
           child: CupertinoPicker(
             onSelectedItemChanged: (int value) {
               selectCategory = categoryList[value];

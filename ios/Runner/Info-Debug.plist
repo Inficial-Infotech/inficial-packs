@@ -20,14 +20,34 @@
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
 	<array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>fb579053182739207</string>
+            </array>
+        </dict>
+		<dict>
+    		<key>CFBundleTypeRole</key>
+    		<string>Editor</string>
+    		<key>CFBundleURLSchemes</key>
+    		<array>
+    			<string>com.packsinternational.packs</string>
+    		</array>
+    	</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>FIREBASE_SCHEMA</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.556798406994-grpdbmphfdg4nbb89irk93cnruhcgvqv</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>app-1-556798406994-ios-6e7a15e0aff986335aca8b</string>
 			</array>
 		</dict>
 	</array>
@@ -62,5 +82,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    <key>FacebookAppID</key>
+    <string>579053182739207</string>
+    <key>FacebookClientToken</key>
+    <string>280a8957aa0f08135cac6629146a9e90</string>
+    <key>FacebookDisplayName</key>
+    <string>Packs</string>
 </dict>
 </plist>

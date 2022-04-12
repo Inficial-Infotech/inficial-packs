@@ -30,6 +30,7 @@ class PXColor {
   static const primary = Color(0xFF005F78);
   static const pink = Color(0xFFFF0358);
   static const red = Color(0xFFB42525);
+  static const boxColor = Color(0xFFF2F5F7);
   static const orange = Color(0xFFEB6D00);
   static const yellow = Color(0xFFFFC703);
 }

@@ -10,7 +10,7 @@ class ReviewCard extends StatelessWidget {
 
   final Color colour;
   final String title;
-  final Function onPressed;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class ReviewCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: CupertinoButton.filled(
-          onPressed: onPressed(),
+          onPressed: onPressed,
           child: const Text('Continue'),
         ),
       ),
