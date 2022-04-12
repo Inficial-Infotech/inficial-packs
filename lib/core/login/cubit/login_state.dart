@@ -4,7 +4,6 @@ enum LoginType {
   phone,
   email,
   google,
-  facebook,
 }
 
 enum LoginSteps { chooseType, generateOtp, verifyOtp }
@@ -29,7 +28,7 @@ class LoginState extends Equatable {
 
   String email;
   final String phone;
-   String name;
+  final String name;
   final Country country;
   final bool loading;
   final List<Country> countries;

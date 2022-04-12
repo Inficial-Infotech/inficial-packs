@@ -56,6 +56,11 @@ dependencies:
   google_sign_in: ^5.2.4
   flutter_login_facebook: ^1.4.1
   sign_in_with_apple: ^3.3.0
+  intl: ^0.17.0
+  multi_image_picker2: ^5.0.2
+  flutter_absolute_path:
+    git:
+      url: https://github.com/ValeriusGC/flutter_absolute_path.git
 
 
 dev_dependencies:
@@ -75,7 +80,6 @@ flutter:
     - images/stage.png
     - assets/flags/
     - assets/images/
-    - assets/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

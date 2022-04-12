@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +6,6 @@ import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:packs/constants/app_constants.dart';
-import 'package:packs/core/login/login_screen.dart';
 import 'package:packs/core/repositories/signup_repository.dart';
 import 'package:packs/core/signup/cubit/signup_cubit.dart';
 import 'package:packs/core/signup/select_name.dart';
@@ -45,24 +42,18 @@ class _SignupScreenState extends State<SignupScreen> {
               child: state.step != SignupSteps.verifyOtp
                   ? Center(
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: PXSpacing.spacingL,
-                            right: PXSpacing.spacingL),
+                        padding: const EdgeInsets.only(left: PXSpacing.spacingL, right: PXSpacing.spacingL),
                         child: Column(
                           children: <Widget>[
                             const SizedBox(height: PXSpacing.spacingXXL),
                             Row(
-                              mainAxisAlignment:
-                                  state.step == SignupSteps.generateOtp
-                                      ? MainAxisAlignment.spaceBetween
-                                      : MainAxisAlignment.end,
+                              mainAxisAlignment: state.step == SignupSteps.generateOtp ? MainAxisAlignment.spaceBetween : MainAxisAlignment.end,
                               children: <Widget>[
                                 if (state.step == SignupSteps.generateOtp)
                                   PXBackButton(
                                     colour: PXColor.black,
                                     onPressed: () {
-                                      cubit.signupStepChanged(
-                                          SignupSteps.chooseType);
+                                      cubit.signupStepChanged(SignupSteps.chooseType);
                                     },
                                   )
                                 else
@@ -82,10 +73,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             const SizedBox(height: PXSpacing.spacingXXL),
                             const Align(
                               alignment: Alignment.topLeft,
-                              child: Text('Let\'s get started!',
-                                  style: TextStyle(
-                                      fontSize: PXFontSize.sizeXXL,
-                                      fontWeight: FontWeight.bold)),
+                              child: Text('Let\'s get started!', style: TextStyle(fontSize: PXFontSize.sizeXXL, fontWeight: FontWeight.bold)),
                             ),
                             const SizedBox(height: PXSpacing.spacingL),
                             Align(
@@ -111,9 +99,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                           country: state.country,
                                         ),
                                         onTap: () {
-                                          _showPicker(context, state.countries,
-                                              state.country,
-                                              (Country selected) {
+                                          _showPicker(context, state.countries, state.country, (Country selected) {
                                             cubit.countyChanged(selected);
                                           });
                                         },
@@ -135,9 +121,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     child: CupertinoTextField(
                                         // controller: phoneController,
                                         onSubmitted: (String e) {},
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                style: BorderStyle.none)),
+                                        decoration: BoxDecoration(border: Border.all(style: BorderStyle.none)),
                                         // keyboardType: TextInputType.phone,
                                         placeholder: 'Your Phone Number',
                                         onChanged: (String value) {
@@ -157,9 +141,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   Expanded(
                                     child: CupertinoTextField(
                                       // keyboardType: TextInputType.emailAddress,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              style: BorderStyle.none)),
+                                      decoration: BoxDecoration(border: Border.all(style: BorderStyle.none)),
                                       placeholder: 'Email',
                                       onChanged: (String val) {
                                         cubit.emailChanged(val);
@@ -178,16 +160,11 @@ class _SignupScreenState extends State<SignupScreen> {
                                 child: Material(
                                   child: GestureDetector(
                                     onTap: () {
-                                      cubit.signupTypeChanged(
-                                          state.signupType == SignupType.phone
-                                              ? SignupType.email
-                                              : SignupType.phone);
+                                      cubit.signupTypeChanged(state.signupType == SignupType.phone ? SignupType.email : SignupType.phone);
                                     },
                                     child: Text(
                                       'use ${state.signupType == SignupType.email ? 'phone' : 'email'} instead',
-                                      style: const TextStyle(
-                                          fontSize: PXFontSize.body,
-                                          fontWeight: FontWeight.bold),
+                                      style: const TextStyle(fontSize: PXFontSize.body, fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ),
@@ -195,9 +172,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             const SizedBox(height: PXSpacing.spacingXXL),
                             if (state.step == SignupSteps.chooseType)
                               Center(
-                                child: Column(children: const <Widget>[
-                                  Text('or continue with')
-                                ]),
+                                child: Column(children: const <Widget>[Text('or continue with')]),
                               )
                             else
                               Container(),
@@ -212,88 +187,54 @@ class _SignupScreenState extends State<SignupScreen> {
                                         height: 60,
                                         width: 60,
                                         decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: PXColor.athensGrey),
-                                          borderRadius: BorderRadius.circular(
-                                              PXBorderRadius.radiusXXL),
+                                          border: Border.all(color: PXColor.athensGrey),
+                                          borderRadius: BorderRadius.circular(PXBorderRadius.radiusXXL),
                                         ),
-                                        child: Padding(
-                                            padding: const EdgeInsets.all(
-                                                PXSpacing.spacingS),
-                                            child: Image.asset(
-                                                'assets/images/mac.png')),
+                                        child:
+                                            Padding(padding: const EdgeInsets.all(PXSpacing.spacingS), child: Image.asset('assets/images/mac.png')),
                                       ),
                                       const SizedBox(width: PXSpacing.spacingS),
                                       GestureDetector(
                                         onTap: () async {
-                                          final GoogleSignInAccount?
-                                              googleUser =
-                                              await googleSignIn.signIn();
+                                          final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
                                           if (googleUser == null) {
                                             return;
                                           }
                                           cubit.emailChanged(googleUser.email);
                                           cubit.setUserId(googleUser.id);
 
-                                          final GoogleSignInAuthentication
-                                              googleAuth =
-                                              await googleUser.authentication;
+                                          final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
                                           final OAuthCredential credential =
-                                              GoogleAuthProvider.credential(
-                                                  idToken: googleAuth.idToken,
-                                                  accessToken:
-                                                      googleAuth.accessToken);
-
-                                          await FirebaseAuth.instance
-                                              .createUserWithEmailAndPassword(
-                                                  email: googleUser.email,
-                                                  password: "STATIC_PWD")
-                                              .catchError((e) {
-                                            if (e.toString().contains(
-                                                "firebase_auth/email-already-in-use")) {
-                                              showFailureSnackBar(
-                                                  'Email is already associated with other account');
-                                            }
-                                          });
-                                          cubit.signupTypeChanged(
-                                              SignupType.google);
+                                              GoogleAuthProvider.credential(idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
+                                          await FirebaseAuth.instance.signInWithCredential(credential);
+                                          cubit.signupTypeChanged(SignupType.google);
                                           navigateToSelectNameScreen(context);
                                         },
                                         child: Container(
                                           height: 60,
                                           width: 60,
                                           decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: PXColor.athensGrey),
-                                            borderRadius: BorderRadius.circular(
-                                                PXBorderRadius.radiusXXL),
+                                            border: Border.all(color: PXColor.athensGrey),
+                                            borderRadius: BorderRadius.circular(PXBorderRadius.radiusXXL),
                                           ),
                                           child: Padding(
-                                              padding: const EdgeInsets.all(
-                                                  PXSpacing.spacingS),
-                                              child: Image.asset(
-                                                  'assets/images/google.png')),
+                                              padding: const EdgeInsets.all(PXSpacing.spacingS), child: Image.asset('assets/images/google.png')),
                                         ),
                                       ),
                                       const SizedBox(width: PXSpacing.spacingS),
                                       GestureDetector(
                                         onTap: () async {
-                                          _fabebookLogin(cubit);
+                                          _fabeBookLogin();
                                         },
                                         child: Container(
                                           height: 60,
                                           width: 60,
                                           decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: PXColor.athensGrey),
-                                            borderRadius: BorderRadius.circular(
-                                                PXBorderRadius.radiusXXL),
+                                            border: Border.all(color: PXColor.athensGrey),
+                                            borderRadius: BorderRadius.circular(PXBorderRadius.radiusXXL),
                                           ),
-                                          child: Padding(
-                                              padding: const EdgeInsets.all(
-                                                  PXSpacing.spacingS),
-                                              child: Image.asset(
-                                                  'assets/images/fb.png')),
+                                          child:
+                                              Padding(padding: const EdgeInsets.all(PXSpacing.spacingS), child: Image.asset('assets/images/fb.png')),
                                         ),
                                       ),
                                     ],
@@ -308,20 +249,15 @@ class _SignupScreenState extends State<SignupScreen> {
                                       : () async {
                                           cubit.setLoading(true);
 
-                                          if (state.signupType ==
-                                              SignupType.phone) {
+                                          if (state.signupType == SignupType.phone) {
                                             try {
                                               final bool isExists = await context
                                                   .read<SignupRepository>()
-                                                  .checkIfPhoneAlreadyRegistered(
-                                                      '${state.country.dialCode!}${state.phone}');
+                                                  .checkIfPhoneAlreadyRegistered('${state.country.dialCode!}${state.phone}');
                                               if (isExists) {
-                                                showSnackBar(
-                                                    'Phone number is already associated with other account',
-                                                    context);
+                                                showSnackBar('Phone number is already associated with other account', context);
                                               } else {
-                                                cubit.signupStepChanged(
-                                                    SignupSteps.generateOtp);
+                                                cubit.signupStepChanged(SignupSteps.generateOtp);
                                               }
                                             } catch (e) {
                                               print(e);
@@ -330,22 +266,15 @@ class _SignupScreenState extends State<SignupScreen> {
                                             }
                                           } else {
                                             try {
-                                              final String code = await context
-                                                  .read<SignupRepository>()
-                                                  .getEmailCode(state.email);
+                                              final String code = await context.read<SignupRepository>().getEmailCode(state.email);
                                               if (code.isNotEmpty) {
                                                 cubit.setEmailCode(code);
-                                                cubit.signupStepChanged(
-                                                    SignupSteps.generateOtp);
+                                                cubit.signupStepChanged(SignupSteps.generateOtp);
                                               } else {
-                                                showSnackBar(
-                                                    'Email is already associated with other account',
-                                                    context);
+                                                showSnackBar('Email is already associated with other account', context);
                                               }
                                             } catch (e) {
-                                              showSnackBar(
-                                                  'Email is already associated with other account',
-                                                  context);
+                                              showSnackBar('Email is already associated with other account', context);
                                             } finally {
                                               cubit.setLoading(false);
                                             }
@@ -361,19 +290,11 @@ class _SignupScreenState extends State<SignupScreen> {
                                 onPressed: state.loading
                                     ? null
                                     : () async {
-                                        if (state.signupType ==
-                                            SignupType.phone) {
-                                          verifyPhoneNumber(
-                                              '${state.country.dialCode!}${state.phone}',
-                                              context,
-                                              state,
-                                              cubit);
+                                        if (state.signupType == SignupType.phone) {
+                                          verifyPhoneNumber('${state.country.dialCode!}${state.phone}', context, state, cubit);
                                         } else {
-                                          showSnackBar(
-                                              'A code has been sent to ${state.email}',
-                                              context);
-                                          cubit.signupStepChanged(
-                                              SignupSteps.verifyOtp);
+                                          showSnackBar('A code has been sent to ${state.email}', context);
+                                          cubit.signupStepChanged(SignupSteps.verifyOtp);
                                         }
                                       },
                                 child: state.loading
@@ -388,26 +309,19 @@ class _SignupScreenState extends State<SignupScreen> {
                               SizedBox(
                                 height: 80,
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 25),
+                                  padding: const EdgeInsets.symmetric(horizontal: 25),
                                   child: Center(
                                     child: Wrap(
                                       children: const <Widget>[
                                         Text('By signing up, you agree to the'),
                                         Text(
                                           'Terms of Service ',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              decoration:
-                                                  TextDecoration.underline),
+                                          style: TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline),
                                         ),
                                         Text('and '),
                                         Text(
                                           'Privacy Policy',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              decoration:
-                                                  TextDecoration.underline),
+                                          style: TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline),
                                         ),
                                       ],
                                     ),
@@ -439,12 +353,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                 colour: PXColor.black,
                                 onPressed: () {
                                   if (state.step == SignupSteps.generateOtp) {
-                                    cubit.signupStepChanged(
-                                        SignupSteps.chooseType);
-                                  } else if (state.step ==
-                                      SignupSteps.verifyOtp) {
-                                    cubit.signupStepChanged(
-                                        SignupSteps.generateOtp);
+                                    cubit.signupStepChanged(SignupSteps.chooseType);
+                                  } else if (state.step == SignupSteps.verifyOtp) {
+                                    cubit.signupStepChanged(SignupSteps.generateOtp);
                                   }
                                 },
                               ),
@@ -465,9 +376,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             alignment: Alignment.topLeft,
                             child: Text(
                               '${state.signupType == SignupType.email ? 'Email' : 'Phone'} Verification',
-                              style: const TextStyle(
-                                  fontSize: PXFontSize.sizeXXL,
-                                  fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontSize: PXFontSize.sizeXXL, fontWeight: FontWeight.bold),
                             ),
                           ),
                           const SizedBox(height: PXSpacing.spacingL),
@@ -489,8 +398,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Column(children: <Widget>[
-                                OtpTextField(
-                                    onChangeField: (String value, int index) {
+                                OtpTextField(onChangeField: (String value, int index) {
                                   cubit.setOtpNumber(value, index);
                                 }),
                                 const SizedBox(height: PXSpacing.spacingL),
@@ -498,34 +406,22 @@ class _SignupScreenState extends State<SignupScreen> {
                                   child: GestureDetector(
                                     child: const Text(
                                       'Resend Code',
-                                      style: TextStyle(
-                                          decoration: TextDecoration.underline),
+                                      style: TextStyle(decoration: TextDecoration.underline),
                                     ),
                                     onTap: () async {
-                                      if (state.signupType ==
-                                          SignupType.email) {
+                                      if (state.signupType == SignupType.email) {
                                         try {
-                                          final String code = await context
-                                              .read<SignupRepository>()
-                                              .getEmailCode(state.email);
+                                          final String code = await context.read<SignupRepository>().getEmailCode(state.email);
                                           if (code.isNotEmpty) {
                                             cubit.setEmailCode(code);
                                           } else {
-                                            showSnackBar(
-                                                'Email is already associated with other account',
-                                                context);
+                                            showSnackBar('Email is already associated with other account', context);
                                           }
                                         } catch (e) {
-                                          showSnackBar(
-                                              'Email is already associated with other account',
-                                              context);
+                                          showSnackBar('Email is already associated with other account', context);
                                         }
                                       } else {
-                                        verifyPhoneNumber(
-                                            '${state.country.dialCode!}${state.phone}',
-                                            context,
-                                            state,
-                                            cubit);
+                                        verifyPhoneNumber('${state.country.dialCode!}${state.phone}', context, state, cubit);
                                       }
                                     },
                                   ),
@@ -533,11 +429,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                 const SizedBox(height: PXSpacing.spacingXL),
                                 if (state.signupType == SignupType.email)
                                   const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
+                                    padding: EdgeInsets.symmetric(horizontal: 10),
                                     child: Center(
-                                      child: Text(
-                                          'We’ve sent you a new code. Don’t forget to check your junk folder!'),
+                                      child: Text('We’ve sent you a new code. Don’t forget to check your junk folder!'),
                                     ),
                                   )
                                 else
@@ -548,83 +442,48 @@ class _SignupScreenState extends State<SignupScreen> {
                                         onPressed: state.loading
                                             ? null
                                             : () async {
-                                                final bool isEmpty = state.otp
-                                                    .any((String element) =>
-                                                        element.isEmpty);
+                                                final bool isEmpty = state.otp.any((String element) => element.isEmpty);
                                                 if (isEmpty) {
                                                   return;
                                                 }
                                                 cubit.setLoading(true);
-                                                if (state.signupType ==
-                                                    SignupType.phone) {
-                                                  final String? id = await context
-                                                      .read<SignupRepository>()
-                                                      .verifyPhoneOtp(
-                                                          state.otp.join(),
-                                                          state.verificationId);
+                                                if (state.signupType == SignupType.phone) {
+                                                  final String? id =
+                                                      await context.read<SignupRepository>().verifyPhoneOtp(state.otp.join(), state.verificationId);
                                                   if (id == null) {
-                                                    showSnackBar('Invalid code',
-                                                        context);
+                                                    showSnackBar('Invalid code', context);
                                                   } else {
                                                     cubit.setUserId(id);
-                                                    navigateToSelectNameScreen(
-                                                        context);
+                                                    navigateToSelectNameScreen(context);
                                                   }
                                                   cubit.setLoading(false);
                                                 } else {
-                                                  if (state.emailCode ==
-                                                      state.otp.join()) {
+                                                  if (state.emailCode == state.otp.join()) {
                                                     try {
                                                       final UserCredential d =
-                                                          await _auth
-                                                              .createUserWithEmailAndPassword(
-                                                                  email: state
-                                                                      .email,
-                                                                  password:
-                                                                      'STATIC_PWD');
-                                                      final String uid =
-                                                          d.user!.uid;
+                                                          await _auth.signInWithEmailAndPassword(email: state.email, password: 'STATIC_PWD');
+                                                      final String uid = d.user!.uid;
                                                       cubit.setUserId(uid);
                                                       cubit.setLoading(false);
-                                                      navigateToSelectNameScreen(
-                                                          context);
+                                                      navigateToSelectNameScreen(context);
                                                     } catch (e) {
-                                                      print("$e");
-                                                      if (e.toString().contains(
-                                                          "firebase_auth/email-already-in-use")) {
-                                                        showSnackBar(
-                                                            'Email is already associated with other account',
-                                                            context);
-                                                      }
-
                                                       try {
-                                                        final UserCredential
-                                                            data = await _auth
-                                                                .signInWithEmailAndPassword(
-                                                                    email: state
-                                                                        .email,
-                                                                    password:
-                                                                        'STATIC_PWD');
-                                                        final String uid =
-                                                            data.user!.uid;
+                                                        final UserCredential data =
+                                                            await _auth.createUserWithEmailAndPassword(email: state.email, password: 'STATIC_PWD');
+                                                        final String uid = data.user!.uid;
                                                         cubit.setUserId(uid);
-                                                        navigateToSelectNameScreen(
-                                                            context);
+                                                        navigateToSelectNameScreen(context);
                                                       } finally {
                                                         cubit.setLoading(false);
                                                       }
                                                     }
                                                   } else {
                                                     cubit.setLoading(false);
-                                                    showSnackBar('Invalid code',
-                                                        context);
+                                                    showSnackBar('Invalid code', context);
                                                   }
                                                 }
                                               },
-                                        child: state.loading
-                                            ? const CupertinoActivityIndicator(
-                                                color: PXColor.white)
-                                            : const Text('Submit')))
+                                        child: state.loading ? const CupertinoActivityIndicator(color: PXColor.white) : const Text('Submit')))
                               ]))
                         ],
                       ),
@@ -644,8 +503,7 @@ class _SignupScreenState extends State<SignupScreen> {
     showSnackBar('verification code: $verificationId', ctx);
   }
 
-  Future<void> verifyPhoneNumber(String phoneNumber, BuildContext context,
-      SignupState state, SignupCubit cubit) async {
+  Future<void> verifyPhoneNumber(String phoneNumber, BuildContext context, SignupState state, SignupCubit cubit) async {
     try {
       await _auth.signOut();
     } catch (e) {
@@ -678,8 +536,7 @@ class _SignupScreenState extends State<SignupScreen> {
     }
   }
 
-  Future<void> signInWithPhoneNumber(BuildContext ctx, String code,
-      SignupState state, SignupCubit cubit) async {
+  Future<void> signInWithPhoneNumber(BuildContext ctx, String code, SignupState state, SignupCubit cubit) async {
     try {
       final AuthCredential credential = PhoneAuthProvider.credential(
         verificationId: state.verificationId,
@@ -697,35 +554,25 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void showSnackBar(String message, BuildContext ctx) {
-    Fluttertoast.showToast(
-        msg: message,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: PXColor.black,
-        textColor: PXColor.white,
-        toastLength: Toast.LENGTH_LONG);
+    Fluttertoast.showToast(msg: message, gravity: ToastGravity.BOTTOM, backgroundColor: PXColor.black, textColor: PXColor.white);
   }
 
-  void verificationCompleted(
-      PhoneAuthCredential phoneAuthCredential, BuildContext ctx) {
+  void verificationCompleted(PhoneAuthCredential phoneAuthCredential, BuildContext ctx) {
     // await _auth.signInWithCredential(phoneAuthCredential);
     // showSnackbar(
     //     "Phone number automatically verified and user signed in: ${_auth.currentUser?.uid}",
     //     ctx);
   }
 
-  void verificationFailed(
-      FirebaseAuthException authException, BuildContext ctx) {
-    showSnackBar(
-        'Phone number verification failed. Code: ${authException.code}. Message: ${authException.message}',
-        ctx);
+  void verificationFailed(FirebaseAuthException authException, BuildContext ctx) {
+    showSnackBar('Phone number verification failed. Code: ${authException.code}. Message: ${authException.message}', ctx);
   }
 
   void navigateToSelectNameScreen(BuildContext context) {
     Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (BuildContext ctx) =>
-            RepositoryProvider<SignupRepository>.value(
+        builder: (BuildContext ctx) => RepositoryProvider<SignupRepository>.value(
           value: context.read<SignupRepository>(),
           child: BlocProvider<SignupCubit>.value(
             value: BlocProvider.of<SignupCubit>(context),
@@ -736,8 +583,8 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Future<void> _fabebookLogin(SignupCubit cubit) async {
-    final FacebookLoginResult res = await facebookLogin.logIn(permissions: [
+  Future<void> _fabeBookLogin() async {
+    final FacebookLoginResult res = await facebookLogin.logIn(permissions: <FacebookPermission>[
       FacebookPermission.publicProfile,
       FacebookPermission.email,
     ]);
@@ -746,39 +593,24 @@ class _SignupScreenState extends State<SignupScreen> {
         final FacebookAccessToken? accessToken = res.accessToken;
         final String token = accessToken?.token ?? '';
 
-        final FacebookUserProfile? profile =
-            await facebookLogin.getUserProfile();
+        final FacebookUserProfile? profile = await facebookLogin.getUserProfile();
         final String? userProfile = profile?.userId;
         final String? userName = profile?.name;
 
+        final String? imageUrl = await facebookLogin.getProfileImageUrl(width: 100);
         final String? email = await facebookLogin.getUserEmail();
         if (email != null) final String userEmail = email;
-        cubit.emailChanged(email!);
-        cubit.setUserId(profile!.userId);
-        final OAuthCredential credential =
-            FacebookAuthProvider.credential(token);
-        await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(
-                email: email, password: "STATIC_PWD")
-            .catchError((e) {
-          if (e.toString().contains("firebase_auth/email-already-in-use")) {
-            showFailureSnackBar(
-                'Email is already associated with other account');
-          }
-        });
-        cubit.signupTypeChanged(SignupType.faceBook);
-        navigateToSelectNameScreen(context);
         break;
       case FacebookLoginStatus.cancel:
         break;
       case FacebookLoginStatus.error:
+        print('Error while log in: ${res.error}');
         break;
     }
   }
 }
 
-void _showPicker(BuildContext ctx, List<Country> countries, Country? country,
-    Function(Country) onSave) {
+void _showPicker(BuildContext ctx, List<Country> countries, Country? country, Function(Country) onSave) {
   int index = countries.indexOf(country!);
   showCupertinoModalPopup(
       context: ctx,
@@ -789,8 +621,7 @@ void _showPicker(BuildContext ctx, List<Country> countries, Country? country,
                 child: CupertinoPicker(
                   backgroundColor: Colors.white,
                   itemExtent: 60,
-                  scrollController:
-                      FixedExtentScrollController(initialItem: index),
+                  scrollController: FixedExtentScrollController(initialItem: index),
                   children: <Widget>[
                     for (Country item in countries)
                       Row(
@@ -843,8 +674,7 @@ class _Flag extends StatelessWidget {
         ? Image.asset(
             country!.flagUri,
             width: 32.0,
-            errorBuilder:
-                (BuildContext context, Object error, StackTrace? stackTrace) {
+            errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
               return const SizedBox.shrink();
             },
           )
@@ -852,11 +682,7 @@ class _Flag extends StatelessWidget {
   }
 }
 
-Widget _textFieldOTP(
-    {bool? first,
-    bool? last,
-    required BuildContext context,
-    required Function(String) onChange}) {
+Widget _textFieldOTP({bool? first, bool? last, required BuildContext context, required Function(String) onChange}) {
   return SizedBox(
     height: 45,
     child: AspectRatio(
@@ -872,9 +698,7 @@ Widget _textFieldOTP(
             FocusScope.of(context).previousFocus();
           }
         },
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50.0),
-            border: Border.all(color: PXColor.lightGrey)),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(50.0), border: Border.all(color: PXColor.lightGrey)),
         textAlign: TextAlign.center,
         textAlignVertical: TextAlignVertical.center,
         style: const TextStyle(

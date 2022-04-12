@@ -19,7 +19,7 @@ class Country {
   final String flagUri;
 
   /// The nameTranslation for translation
-  final dynamic nameTranslations;
+  final Map<String, String>? nameTranslations;
 
   Country({
     required this.name,
@@ -31,15 +31,15 @@ class Country {
   });
 
   /// Convert [Countries.countryList] to [Country] model
-  factory Country.fromJson(data) {
+  factory Country.fromJson(Map<String, dynamic> data) {
     return Country(
-      name: data['en_short_name'].toString(),
-      alpha2Code: data['alpha_2_code'].toString(),
-      alpha3Code: data['alpha_3_code'].toString(),
-      dialCode: data['dial_code'].toString(),
-      flagUri: 'assets/flags/${data['alpha_2_code'].toString().toLowerCase()}.png',
+      name: data['en_short_name'],
+      alpha2Code: data['alpha_2_code'],
+      alpha3Code: data['alpha_3_code'],
+      dialCode: data['dial_code'],
+      flagUri: 'assets/flags/${data['alpha_2_code'].toLowerCase()}.png',
       nameTranslations: data['nameTranslations'] != null
-          ? data['nameTranslations']
+          ? Map<String, String>.from(data['nameTranslations'])
           : null,
     );
   }

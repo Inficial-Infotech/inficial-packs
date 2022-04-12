@@ -18,7 +18,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('images/stage.png'),
             fit: BoxFit.cover,
@@ -30,69 +30,74 @@ class WelcomeScreen extends StatelessWidget {
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Center(
-                      child: Image(
-                        image: AssetImage('images/logo.png'),
+                  children: [
+                    Container(
+                      child: Center(
+                        child: Image(
+                          image: AssetImage('images/logo.png'),
+                        ),
                       ),
                     ),
                     SizedBox(height: PXSpacing.spacingXL),
-                    Center(
-                      child: Text(
-                        'Exploring made simple',
-                        style: TextStyle(fontSize: 15, color: PXColor.white),
+                    Container(
+                      child: Center(
+                        child: Text(
+                          'Exploring made simple',
+                          style: TextStyle(fontSize: 15, color: PXColor.white),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-              Column(
-                children: [
-                  CupertinoButton.filled(
-                    borderRadius: BorderRadius.circular(30.0),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (BuildContext ctx) => RepositoryProvider(
-                              create: (BuildContext context) =>
-                                  SignupRepository(
-                                context.read<AuthenticationRepository>(),
-                              ),
-                              child: BlocProvider(
-                                create: (BuildContext context) =>
-                                    SignupCubit()..loadCountries('AU'),
-                                child: const SignupScreen(),
-                              ),
-                            ),
-                          ));
-                    },
-                    child: const Text('Signup'),
-                  ),
-                  const SizedBox(height: PXSpacing.spacingM),
-                  CupertinoButton.filled(
-                    borderRadius: BorderRadius.circular(30.0),
-                    child: const Text('Login'),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (BuildContext ctx) => RepositoryProvider(
-                              create: (BuildContext context) => LoginRepository(
-                                context.read<AuthenticationRepository>(),
-                              ),
-                              child: BlocProvider(
-                                create: (BuildContext context) => LoginCubit(
+              Container(
+                child: Column(
+                  children: [
+                    CupertinoButton.filled(
+                      child: Text('Signup'),
+                      borderRadius: BorderRadius.circular(30.0),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (ctx) => RepositoryProvider(
+                                create: (context) => SignupRepository(
                                   context.read<AuthenticationRepository>(),
-                                )..loadCountries('AU'),
-                                child: const LoginScreen(),
+                                ),
+                                child: BlocProvider(
+                                  create: (context) =>
+                                      SignupCubit()..loadCountries('AU'),
+                                  child: SignupScreen(),
+                                ),
                               ),
-                            ),
-                          ));
-                    },
-                  ),
-                  const SizedBox(height: PXSpacing.spacingXL),
-                ],
+                            ));
+                      },
+                    ),
+                    SizedBox(height: PXSpacing.spacingM),
+                    CupertinoButton.filled(
+                      borderRadius: BorderRadius.circular(30.0),
+                      child: Text('Login'),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (ctx) => RepositoryProvider(
+                                create: (context) => LoginRepository(
+                                  context.read<AuthenticationRepository>(),
+                                ),
+                                child: BlocProvider(
+                                  create: (context) => LoginCubit(
+                                    context.read<AuthenticationRepository>(),
+                                  )..loadCountries('AU'),
+                                  child: LoginScreen(),
+                                ),
+                              ),
+                            ));
+                      },
+                    ),
+                    SizedBox(height: PXSpacing.spacingXL),
+                  ],
+                ),
               ),
             ],
           ),

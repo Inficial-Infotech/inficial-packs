@@ -55,14 +55,14 @@ class OtpTextField extends StatelessWidget {
   }
 }
 
-Widget _textFieldOTP({bool? first, last, required BuildContext context, onChange}) {
+Widget _textFieldOTP({bool? first, last, context, onChange}) {
   return Container(
     height: 45,
     child: AspectRatio(
       aspectRatio: 1,
       child: CupertinoTextField(
         autofocus: true,
-        onChanged: (String value) {
+        onChanged: (value) {
           onChange(value);
           if (value.length == 1 && last == false) {
             FocusScope.of(context).nextFocus();

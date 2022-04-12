@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:packs/constants/app_constants.dart';
 import 'package:packs/models/AddressModel.dart';
 import 'package:packs/models/MeetupModel.dart';
 import 'package:packs/models/UserModel.dart';
-import 'package:packs/modules/meetups/screens/meetups_add-meetup_category.dart';
+import 'package:packs/modules/meetups/cubit/meetup_cubit.dart';
+import 'package:packs/modules/meetups/screens/meetups_add_category.dart';
 import 'package:packs/widgets/components/bar_button.dart';
 import 'package:packs/widgets/components/header.dart';
 import 'package:packs/widgets/components/meetup_card.dart';
@@ -59,8 +61,16 @@ class _MeetupsOverviewScreen extends State<MeetupsOverviewScreen> {
                       PXBarButton(
                         icon: CupertinoIcons.plus,
                         onTap: () => {
-                          Navigator.of(context)
-                              .pushNamed(MeetupsAddMeetupScreen.id),
+                          // Navigator.of(context).pushNamed(MeetupsAddCategoryScreen.id),
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (BuildContext ctx) => BlocProvider<MeetUpCubit>(
+                                create: (BuildContext context) => MeetUpCubit(),
+                                child: const MeetupsAddCategoryScreen(),
+                              ),
+                            ),
+                          )
                         },
                       ),
                     ],

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class PXButton extends StatelessWidget {
   final Color colour;
   final String title;
-  final VoidCallback onPressed;
+  final Function onPressed;
 
   const PXButton({
     required this.title,
@@ -17,7 +17,7 @@ class PXButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: CupertinoButton.filled(
-        onPressed: onPressed,
+        onPressed: onPressed(),
         child: const Text('Continue'),
       ),
     );

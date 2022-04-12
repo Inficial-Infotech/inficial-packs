@@ -335,6 +335,15 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_absolute_path:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: e7a72c7b7fe315d0629333575339ba2ef08a0690
+      url: "https://github.com/ValeriusGC/flutter_absolute_path.git"
+    source: git
+    version: "1.0.6"
   flutter_bloc:
     dependency: "direct main"
     description:
@@ -507,7 +516,7 @@ packages:
     source: hosted
     version: "4.0.0"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
@@ -646,6 +655,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  multi_image_picker2:
+    dependency: "direct main"
+    description:
+      name: multi_image_picker2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.02"
   nested:
     dependency: transitive
     description:

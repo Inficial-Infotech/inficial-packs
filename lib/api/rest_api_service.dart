@@ -16,6 +16,7 @@ class RestApiService {
   }
 
   Future<http.Response> post(String path, Object? body) {
+    log('api : $baseUrl$path');
     return http.post(
       Uri.parse('$baseUrl$path'),
       body: jsonEncode(body),

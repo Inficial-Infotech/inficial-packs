@@ -17,9 +17,7 @@ import 'package:packs/widgets/screens/welcome_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp().then((value) {
-    print("firebase init $value");
-  });
+  await Firebase.initializeApp();
   final authenticationRepository = AuthenticationRepository();
   // if (authenticationRepository.user != null) {
   //   await authenticationRepository.user.first;
@@ -112,4 +110,3 @@ class LoadingScreen extends StatelessWidget {
     );
   }
 }
-

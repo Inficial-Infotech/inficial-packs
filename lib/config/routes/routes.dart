@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:packs/core/profile/profile_screen.dart';
-
 // Widgets:
 // import 'package:packs/widgets/screens/HomeScreen.dart';
 import 'package:packs/modules/deals/screens/saved_deals_screen.dart';
 import 'package:packs/modules/home/screens/bookings/screens/bookings_screen.dart';
 import 'package:packs/modules/home/screens/home_screen.dart';
-import 'package:packs/modules/meetups/screens/meetups_add-meetup_category.dart';
+import 'package:packs/modules/meetups/screens/meetups_add_category.dart';
 import 'package:packs/modules/meetups/screens/meetups_detail_screen.dart';
 import 'package:packs/modules/meetups/screens/meetups_overview_screen.dart';
 
@@ -22,9 +21,9 @@ class RouteGenerator {
         return CupertinoPageRoute(builder: (_) => MeetupsOverviewScreen());
       case MeetupsDetailScreen.id:
         return CupertinoPageRoute(builder: (_) => MeetupsDetailScreen());
-      case MeetupsAddMeetupScreen.id:
+      case MeetupsAddCategoryScreen.id:
         return CupertinoPageRoute(
-            builder: (_) => MeetupsAddMeetupScreen(), fullscreenDialog: true);
+            builder: (_) => MeetupsAddCategoryScreen(), fullscreenDialog: true);
       case BookingsScreen.id:
         return CupertinoPageRoute(builder: (_) => BookingsScreen());
       case ProfileScreen.id:

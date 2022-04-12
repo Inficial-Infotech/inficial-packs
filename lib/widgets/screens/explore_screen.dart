@@ -92,7 +92,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                             : Container(
                                 width: double.infinity,
                                 height: double.infinity,
-                                child: const CupertinoActivityIndicator(),
+                                child: CupertinoActivityIndicator(),
                               ),
                       ),
                     ),

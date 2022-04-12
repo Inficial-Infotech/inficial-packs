@@ -32,7 +32,7 @@ class _DealsSliverListState extends State<DealsSliverList> {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: model.stream,
-      builder: (BuildContext context, AsyncSnapshot<List<DealModel>> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return SliverList(
             delegate: SliverChildListDelegate([
@@ -45,8 +45,8 @@ class _DealsSliverListState extends State<DealsSliverList> {
           return SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
-                if (index < snapshot.data!.length) {
-                  return DealCard(model: snapshot.data![index]);
+                if (index < snapshot.data.length) {
+                  return DealCard(model: snapshot.data[index]);
                 }
 
                 // TODO: - Einkommentieren, wenn `hasMore` korrekt berechnet wird
@@ -57,7 +57,7 @@ class _DealsSliverListState extends State<DealsSliverList> {
                 // }
               },
               childCount:
-                  snapshot.data!.length < 10 ? snapshot.data!.length + 1 : 10,
+                  snapshot.data.length < 10 ? snapshot.data.length + 1 : 10,
             ),
           );
         }

@@ -42,69 +42,7 @@ class Countries {
   ///
   static List<Map<String, dynamic>> get countryList => _countryList;
 
-  static List<Map<String, dynamic>> _countryList = [   
-     {
-      "num_code": "356",
-      "alpha_2_code": "IN",
-      "alpha_3_code": "IND",
-      "en_short_name": "India",
-      "nationality": "Indian",
-      "dial_code": "+91",
-      "nameTranslations": {
-        "sk": "India",
-        "se": "India",
-        "pl": "Indie",
-        "no": "India",
-        "ja": "インド",
-        "it": "India",
-        "zh": "印度",
-        "nl": "India",
-        "de": "Indien",
-        "fr": "Inde",
-        "es": "India",
-        "en": "India",
-        "pt_BR": "Índia",
-        "sr-Cyrl": "Индија",
-        "sr-Latn": "Indija",
-        "zh_TW": "印度",
-        "tr": "Hindistan",
-        "ro": "India",
-        "ar": "الهند",
-        "fa": "هند",
-        "yue": "印度"
-      }
-    },
-    {
-      "num_code": "86",
-      "alpha_2_code": "IO",
-      "alpha_3_code": "IOT",
-      "en_short_name": "British Indian Ocean Territory",
-      "nationality": "BIOT",
-      "dial_code": "+246",
-      "nameTranslations": {
-        "sk": "Britské indickooceánske územie",
-        "se": "British Indian Ocean Territory",
-        "pl": "Brytyjskie Terytorium Oceanu Indyjskiego",
-        "no": "Det britiske territoriet i Indiahavet",
-        "ja": "英領インド洋地域",
-        "it": "Territorio britannico dell'Oceano Indiano",
-        "zh": "英属印度洋领地",
-        "nl": "Brits Indische Oceaanterritorium",
-        "de": "Britisches Territorium im Indischen Ozean",
-        "fr": "Territoire britannique de l'océan Indien",
-        "es": "Territorio Británico del Océano Índico",
-        "en": "British Indian Ocean Territory",
-        "pt_BR": "Território Britânico do Oceano Índico",
-        "sr-Cyrl": "Британска територија Индијског океана",
-        "sr-Latn": "Britanska teritorija Indijskog okeana",
-        "zh_TW": "英屬印度洋領地",
-        "tr": "Britanya Hint Okyanusu Toprakları",
-        "ro": "Teritoriul Britanic din Oceanul Indian",
-        "ar": "إقليم المحيط الهندي البريطاني",
-        "fa": "سرزمین دریایی هند - بریتانیا",
-        "yue": "英屬印度洋領土"
-      }
-    },
+  static List<Map<String, dynamic>> _countryList = [
     {
       "num_code": "4",
       "alpha_2_code": "AF",
@@ -3205,7 +3143,37 @@ class Countries {
         "yue": "冰島"
       }
     },
-
+    {
+      "num_code": "356",
+      "alpha_2_code": "IN",
+      "alpha_3_code": "IND",
+      "en_short_name": "India",
+      "nationality": "Indian",
+      "dial_code": "+91",
+      "nameTranslations": {
+        "sk": "India",
+        "se": "India",
+        "pl": "Indie",
+        "no": "India",
+        "ja": "インド",
+        "it": "India",
+        "zh": "印度",
+        "nl": "India",
+        "de": "Indien",
+        "fr": "Inde",
+        "es": "India",
+        "en": "India",
+        "pt_BR": "Índia",
+        "sr-Cyrl": "Индија",
+        "sr-Latn": "Indija",
+        "zh_TW": "印度",
+        "tr": "Hindistan",
+        "ro": "India",
+        "ar": "الهند",
+        "fa": "هند",
+        "yue": "印度"
+      }
+    },
     {
       "num_code": "360",
       "alpha_2_code": "ID",
