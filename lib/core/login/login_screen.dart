@@ -432,6 +432,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         UserCredential data = await _auth.createUserWithEmailAndPassword(email: state.email, password: 'STATIC_PWD');
                                         navigateToSelectNameScreen(context);
                                       } catch (e) {
+                                        cubit.setLoading(false);
                                       } finally {
                                         cubit.setLoading(false);
                                       }

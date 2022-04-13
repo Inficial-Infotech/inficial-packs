@@ -1,6 +1,6 @@
 part of 'signup_cubit.dart';
 
-enum SignupType { phone, email, google, faceBook }
+enum SignupType { phone, email, google, facebook }
 
 enum SignupSteps { chooseType, generateOtp, verifyOtp }
 

@@ -625,7 +625,7 @@ class _SignupScreenState extends State<SignupScreen> {
             showFailureSnackBar('Email is already associated with other account');
           }
         });
-        cubit.signupTypeChanged(SignupType.faceBook);
+        cubit.signupTypeChanged(SignupType.facebook);
         navigateToSelectNameScreen(context);
         break;
       case FacebookLoginStatus.cancel:

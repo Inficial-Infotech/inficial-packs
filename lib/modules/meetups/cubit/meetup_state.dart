@@ -12,12 +12,13 @@ class MeetUpState extends Equatable {
     this.gender = '',
     this.imageURLs = const [],
     this.coverImageURL = '',
+    this.address = '',
+    this.lat = 0.0,
+    this.lng = 0.0,
     this.minAge = 0,
     this.maxAge = 0,
     this.maxNumberOfParticipants = 0,
-    this.lng = 0.0,
-    this.address = '',
-    this.lat = 0.0
+
   });
 
   String category;
