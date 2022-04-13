@@ -69,22 +69,22 @@ class MeetupRepository {
             SetOptions(merge: true));
   }
 
-  Future getDetailsFromPalaceId(String? placeId, String? apiKey) async {
-    final String url =
-        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$apiKey';
-    final Response result = await RestApiService().get(url, forceUrl: true);
-    if (result.statusCode == 200) {
-      return json.decode(result.body)['result'];
-    }
-    return null;
-  }
-
   Future getDetailsFromCoordinates(LatLng latLng, String? apiKey) async {
     final String url =
         'https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng.latitude},${latLng.longitude}&key=$apiKey';
     final Response result = await RestApiService().get(url, forceUrl: true);
     if (result.statusCode == 200) {
       return json.decode(result.body)['results'];
+    }
+    return null;
+  }
+
+  Future getDetailsFromPalaceId(String? placeId, String? apiKey) async {
+    final String url =
+        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$apiKey';
+    final Response result = await RestApiService().get(url, forceUrl: true);
+    if (result.statusCode == 200) {
+      return json.decode(result.body)['result'];
     }
     return null;
   }
