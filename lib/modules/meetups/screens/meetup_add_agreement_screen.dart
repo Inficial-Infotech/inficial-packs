@@ -14,7 +14,8 @@ class MeetupAddAgreementScreen extends StatefulWidget {
   static const String id = 'MeetupAddAgreementScreen';
 
   @override
-  _MeetupAddAgreementScreenState createState() => _MeetupAddAgreementScreenState();
+  _MeetupAddAgreementScreenState createState() =>
+      _MeetupAddAgreementScreenState();
 }
 
 class _MeetupAddAgreementScreenState extends State<MeetupAddAgreementScreen> {
@@ -88,7 +89,8 @@ class _MeetupAddAgreementScreenState extends State<MeetupAddAgreementScreen> {
                             gender: meetUpCubit.state.gender,
                             minAge: meetUpCubit.state.minAge,
                             maxAge: meetUpCubit.state.maxAge,
-                            maxNumberOfParticipants: meetUpCubit.state.maxNumberOfParticipants,
+                            maxNumberOfParticipants:
+                                meetUpCubit.state.maxParticipants,
                             coverImageURL: meetUpCubit.state.coverImageURL,
                             imageURLs: meetUpCubit.state.imageURLs,
                             address: meetUpCubit.state.address,
@@ -104,13 +106,18 @@ class _MeetupAddAgreementScreenState extends State<MeetupAddAgreementScreen> {
                         ModalRoute.withName('/'),
                       );
                     } catch (e) {
-                      print("Error: $e");
+                      print('Error: $e');
                       Fluttertoast.showToast(
-                          msg: 'Something was wrong', gravity: ToastGravity.BOTTOM, backgroundColor: PXColor.black, textColor: PXColor.white);
+                          msg: 'Something was wrong',
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: PXColor.black,
+                          textColor: PXColor.white);
                     }
                   }
                 },
-                child: isLoading ? const CupertinoActivityIndicator(color: PXColor.white) : const Text('Publish meetup'),
+                child: isLoading
+                    ? const CupertinoActivityIndicator(color: PXColor.white)
+                    : const Text('Publish meetup'),
               ),
             ),
           ],

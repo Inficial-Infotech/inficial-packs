@@ -43,8 +43,12 @@ class LoginCubit extends Cubit<LoginState> {
   final user_repo.UserRepository _userRepository = user_repo.UserRepository();
 
   void loadCountries(String code) {
-    final List<Country> countries = Countries.countryList.map((Map<String, dynamic> country) => Country.fromJson(country)).toList();
-    final Country country = countries.firstWhere((Country country) => country.alpha2Code == code, orElse: () => countries[0]);
+    final List<Country> countries = Countries.countryList
+        .map((Map<String, dynamic> country) => Country.fromJson(country))
+        .toList();
+    final Country country = countries.firstWhere(
+        (Country country) => country.alpha2Code == code,
+        orElse: () => countries[0]);
     emit(state.copyWith(country: country, countries: countries));
   }
 
@@ -138,7 +142,8 @@ class LoginCubit extends Cubit<LoginState> {
     emit(
       state.copyWith(loading: true),
     );
-    final Response result = await RestApiService().post('mobile-app/email/login', {'email': state.email});
+    final Response result = await RestApiService()
+        .post('mobile-app/email/login', {'email': state.email});
 
     emit(
       state.copyWith(
@@ -160,11 +165,13 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future<bool> logInWithCredentials() async {
     try {
-      final User user = await _authenticationRepository.signInUserWithEmailAndPassword(
+      final User user =
+          await _authenticationRepository.signInUserWithEmailAndPassword(
         email: state.email,
         password: 'STATIC_PWD',
       );
-      final user_repo.User? usr = await _userRepository.getUserData(uid: user.uid);
+      final user_repo.User? usr =
+          await _userRepository.getUserData(uid: user.uid);
       globals.currentUserData = usr!;
       return true;
     } catch (_) {

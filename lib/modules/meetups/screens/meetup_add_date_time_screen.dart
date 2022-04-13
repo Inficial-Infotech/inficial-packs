@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:packs/constants/app_constants.dart';
 import 'package:packs/modules/meetups/cubit/meetup_cubit.dart';
 import 'package:packs/modules/meetups/repository/meetup_repository.dart';
 import 'package:packs/modules/meetups/screens/meetup_add_area_screen.dart';
-import 'package:packs/modules/meetups/screens/meetup_add_gender_age_screen.dart';
 
 class MeetupAddDateTimeScreen extends StatefulWidget {
   const MeetupAddDateTimeScreen({Key? key}) : super(key: key);
@@ -14,7 +14,8 @@ class MeetupAddDateTimeScreen extends StatefulWidget {
   static const String id = 'MeetupAddDateTimeScreen';
 
   @override
-  _MeetupAddDateTimeScreenState createState() => _MeetupAddDateTimeScreenState();
+  _MeetupAddDateTimeScreenState createState() =>
+      _MeetupAddDateTimeScreenState();
 }
 
 class _MeetupAddDateTimeScreenState extends State<MeetupAddDateTimeScreen> {
@@ -59,7 +60,7 @@ class _MeetupAddDateTimeScreenState extends State<MeetupAddDateTimeScreen> {
                     child: CupertinoTextField(
                       enabled: false,
                       controller: startDateController,
-                      placeholder: "DD/MM/YY",
+                      placeholder: 'DD/MM/YY',
                     ),
                   )),
             ),
@@ -76,7 +77,7 @@ class _MeetupAddDateTimeScreenState extends State<MeetupAddDateTimeScreen> {
                   child: CupertinoTextField(
                     enabled: false,
                     controller: startTimeController,
-                    placeholder: "9AM",
+                    placeholder: '9AM',
                   ),
                 ),
               ),
@@ -101,7 +102,7 @@ class _MeetupAddDateTimeScreenState extends State<MeetupAddDateTimeScreen> {
                   child: CupertinoTextField(
                     enabled: false,
                     controller: endDateController,
-                    placeholder: "DD/MM/YY",
+                    placeholder: 'DD/MM/YY',
                   ),
                 ),
               ),
@@ -119,7 +120,7 @@ class _MeetupAddDateTimeScreenState extends State<MeetupAddDateTimeScreen> {
                   child: CupertinoTextField(
                     enabled: false,
                     controller: endTimeController,
-                    placeholder: "9AM",
+                    placeholder: '9AM',
                   ),
                 ),
               ),
@@ -144,9 +145,10 @@ class _MeetupAddDateTimeScreenState extends State<MeetupAddDateTimeScreen> {
                   );
                   showCupertinoModalBottomSheet(
                     context: context,
-                    topRadius: Radius.circular(25),
+                    topRadius: const Radius.circular(25),
                     barrierColor: Colors.black,
-                    builder: (ct) => RepositoryProvider<MeetupRepository>(
+                    builder: (BuildContext ct) =>
+                        RepositoryProvider<MeetupRepository>(
                       create: (BuildContext context) => MeetupRepository(),
                       child: BlocProvider<MeetUpCubit>.value(
                         value: BlocProvider.of<MeetUpCubit>(context),
@@ -168,13 +170,14 @@ class _MeetupAddDateTimeScreenState extends State<MeetupAddDateTimeScreen> {
     String selectDate = '';
     await showCupertinoModalPopup(
       context: context,
-      builder: (_) => Container(
-        height: 300,
-        color: Colors.white,
+      builder: (_) => SizedBox(
+        height: 280,
         child: CupertinoDatePicker(
+          minimumYear: DateTime.now().year,
+          maximumYear: DateTime.now().year + 2,
+          backgroundColor: PXColor.white,
           mode: CupertinoDatePickerMode.date,
           initialDateTime: DateTime.now(),
-          backgroundColor: Colors.white,
           onDateTimeChanged: (DateTime dateTime) {
             selectDate = '${dateTime.day}/${dateTime.month}/${dateTime.year}';
           },
@@ -188,10 +191,10 @@ class _MeetupAddDateTimeScreenState extends State<MeetupAddDateTimeScreen> {
     String selectTime = '';
     await showCupertinoModalPopup(
       context: context,
-      builder: (_) => Container(
-        height: 300,
-        color: Colors.white,
+      builder: (_) => SizedBox(
+        height: 280,
         child: CupertinoDatePicker(
+          backgroundColor: PXColor.white,
           mode: CupertinoDatePickerMode.time,
           initialDateTime: DateTime.now(),
           onDateTimeChanged: (DateTime dateTime) {
@@ -202,6 +205,4 @@ class _MeetupAddDateTimeScreenState extends State<MeetupAddDateTimeScreen> {
     );
     return selectTime;
   }
-
-
 }

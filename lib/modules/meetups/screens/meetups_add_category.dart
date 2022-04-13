@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:packs/constants/app_constants.dart';
 import 'package:packs/modules/meetups/cubit/meetup_cubit.dart';
 import 'package:packs/modules/meetups/screens/meetups_add_title_des_screen.dart';
 
@@ -14,7 +15,12 @@ class MeetupsAddCategoryScreen extends StatefulWidget {
 }
 
 class _MeetupsAddMeetupScreen extends State<MeetupsAddCategoryScreen> {
-  List<String> categoryList = const <String>['Day activity', 'Night out', 'Multi-day', 'Mini getaway'];
+  List<String> categoryList = const <String>[
+    'Day activity',
+    'Night out',
+    'Multi-day',
+    'Mini getaway'
+  ];
 
   String selectedValue = '';
   late MeetUpCubit meetUpCubit;
@@ -50,8 +56,10 @@ class _MeetupsAddMeetupScreen extends State<MeetupsAddCategoryScreen> {
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                  child: Text(selectedValue.isEmpty ? 'Category' : selectedValue),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                  child:
+                      Text(selectedValue.isEmpty ? 'Category' : selectedValue),
                 ),
               ),
               const SizedBox(
@@ -79,18 +87,26 @@ class _MeetupsAddMeetupScreen extends State<MeetupsAddCategoryScreen> {
     await showCupertinoModalPopup(
       context: context,
       builder: (BuildContext builder) {
-        return Container(
-          height: MediaQuery.of(context).copyWith().size.height * 0.25,
-          color: Colors.white,
+        return SizedBox(
+          height: 220,
           child: CupertinoPicker(
+            itemExtent: 30,
+            useMagnifier: true,
+            magnification: 1.3,
+            backgroundColor: PXColor.white,
             onSelectedItemChanged: (int value) {
               selectCategory = categoryList[value];
             },
-            itemExtent: 25,
-            diameterRatio: 1,
-            useMagnifier: true,
-            magnification: 1.3,
-            children: List<Widget>.generate(categoryList.length, (int index) => Text(categoryList[index])).toList(),
+            children: List<Widget>.generate(
+                categoryList.length,
+                (int index) => Center(
+                      child: Text(
+                        categoryList[index],
+                        style: const TextStyle(
+                          fontSize: PXFontSize.headline,
+                        ),
+                      ),
+                    )).toList(),
           ),
         );
       },

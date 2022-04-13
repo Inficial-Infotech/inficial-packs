@@ -14,7 +14,8 @@ class SignupRepository {
   final user_repo.UserRepository _userRepository = user_repo.UserRepository();
 
   Future<String> getEmailCode(String email) async {
-    final Response result = await RestApiService().get('mobile-app/email-verification/$email');
+    final Response result =
+        await RestApiService().get('mobile-app/email-verification/$email');
     if (result.statusCode == 200) {
       return json.decode(result.body)['data']['result'].toString();
     }
@@ -29,8 +30,16 @@ class SignupRepository {
     return false;
   }
 
-  Future<bool> signup(String email, String name, String phone, String uid, String countryOfInterest, bool isPhone, String smsCode,
-      String verificationId, String emailCode) async {
+  Future<bool> signup(
+      String email,
+      String name,
+      String phone,
+      String uid,
+      String countryOfInterest,
+      bool isPhone,
+      String smsCode,
+      String verificationId,
+      String emailCode) async {
     // String? userId;
     // if (!isPhone) {
     //   try {
@@ -49,8 +58,14 @@ class SignupRepository {
     //   }
     // }
 
-    final Response result = await RestApiService()
-        .post('mobile-app/mobille-signup', {'email': email, 'phone': phone, 'uid': uid, 'countryOfInterest': countryOfInterest, 'name': name});
+    final Response result =
+        await RestApiService().post('mobile-app/mobille-signup', {
+      'email': email,
+      'phone': phone,
+      'uid': uid,
+      'countryOfInterest': countryOfInterest,
+      'name': name
+    });
     if (result.statusCode == 200) {
       final user_repo.User? user = await _userRepository.getUserData(uid: uid);
       globals.currentUserData = user!;
@@ -66,7 +81,8 @@ class SignupRepository {
       smsCode: code,
     );
     try {
-      final User user = await _authenticationRepository.signUpWithCredential(credential);
+      final User user =
+          await _authenticationRepository.signUpWithCredential(credential);
       return user.uid;
     } catch (e) {
       return null;

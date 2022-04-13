@@ -13,11 +13,13 @@ class LoginRepository {
   final AuthenticationRepository _auth;
 
   Future<User> sigIn(String email, String password) async {
-    return _auth.signInUserWithEmailAndPassword(email: email, password: password);
+    return _auth.signInUserWithEmailAndPassword(
+        email: email, password: password);
   }
 
   Future<String> getEmailCode(String email) async {
-    final Response result = await RestApiService().get('mobile-app/email-verification/$email');
+    final Response result =
+        await RestApiService().get('mobile-app/email-verification/$email');
     if (result.statusCode == 200) {
       return json.decode(result.body)['data']['result'].toString();
     }
@@ -26,7 +28,8 @@ class LoginRepository {
 
   Future<bool> signInWithPhone(String phone, {String uid = ''}) async {
     try {
-      final Response result = await RestApiService().post('mobile-app/phone/login', {'phone': phone});
+      final Response result = await RestApiService()
+          .post('mobile-app/phone/login', {'phone': phone});
       if (result.statusCode == 200) {
         return true;
       } else {
@@ -39,7 +42,8 @@ class LoginRepository {
 
   Future<String> signInWithEmail(String email, {String uid = ''}) async {
     try {
-      final Response result = await RestApiService().post('mobile-app/email/login', {'email': email});
+      final Response result = await RestApiService()
+          .post('mobile-app/email/login', {'email': email});
       if (result.statusCode == 200) {
         String userId = json.decode(result.body)['data']['uid'].toString();
         final SharedPreferences prefs = await SharedPreferences.getInstance();

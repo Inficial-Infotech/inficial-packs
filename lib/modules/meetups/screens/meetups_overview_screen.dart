@@ -6,6 +6,9 @@ import 'package:packs/models/MeetupModel.dart';
 import 'package:packs/models/UserModel.dart';
 import 'package:packs/modules/meetups/cubit/meetup_cubit.dart';
 import 'package:packs/modules/meetups/screens/meetups_add_category.dart';
+import 'package:packs/modules/meetups/screens/meetups_overview_attending_screen.dart';
+import 'package:packs/modules/meetups/screens/meetups_overview_my_meetups_screen.dart';
+import 'package:packs/modules/meetups/screens/meetups_overview_requests_screen.dart';
 import 'package:packs/widgets/components/bar_button.dart';
 import 'package:packs/widgets/components/header.dart';
 import 'package:packs/widgets/components/meetup_card.dart';
@@ -40,6 +43,7 @@ class _MeetupsOverviewScreen extends State<MeetupsOverviewScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       child: SafeArea(
+        top: false,
         child: Stack(
           children: [
             CustomScrollView(
@@ -48,14 +52,14 @@ class _MeetupsOverviewScreen extends State<MeetupsOverviewScreen> {
                   pinned: true,
                   floating: true,
                   delegate: PXSliverPersistentHeaderDelegate(
-                    openHeight: 118,
-                    closedHeight: 40,
+                    openHeight: 280,
+                    closedHeight: 80,
                     title: 'Meetups',
-                    child: SegmentedControl(
-                      items: segmentedControlSegments,
-                      segmentedControlValue: segmentedControlValue,
-                      callback: callback,
-                    ),
+                    images: [
+                      Image.asset('assets/images/stage.png', fit: BoxFit.cover),
+                      Image.asset('assets/images/stage.png', fit: BoxFit.cover),
+                      Image.asset('assets/images/stage.png', fit: BoxFit.cover),
+                    ],
                     hasBackButton: true,
                     barButtons: [
                       PXBarButton(
@@ -74,6 +78,11 @@ class _MeetupsOverviewScreen extends State<MeetupsOverviewScreen> {
                         },
                       ),
                     ],
+                    child: SegmentedControl(
+                      items: segmentedControlSegments,
+                      segmentedControlValue: segmentedControlValue,
+                      callback: callback,
+                    ),
                   ),
                 ),
                 SliverList(
@@ -82,9 +91,9 @@ class _MeetupsOverviewScreen extends State<MeetupsOverviewScreen> {
                       Padding(
                         padding: const EdgeInsets.all(12),
                         child: [
-                          MeetupsDetailScreenAttending(),
-                          MeetupsDetailScreenMyMeetups(),
-                          MeetupsDetailScreenRequests(),
+                          MeetupsOverviewAttendingScreen(),
+                          MeetupsOverviewMyMeetupsScreen(),
+                          MeetupsOverviewRequestsScreen(),
                         ][segmentedControlValue],
                       ),
                       const SizedBox(height: PXSpacing.spacingS),
@@ -133,6 +142,137 @@ class MeetupsDetailScreenAttending extends StatelessWidget {
             openRequests: [],
           ),
         ),
+        SizedBox(height: PXSpacing.spacingS),
+        MeetupCard(
+          model: MeetupModel(
+            title: 'Sunset picnic at Bondi beach',
+            owner: UserModel(
+              firstName: 'Yule',
+              logoURL:
+                  'https://media.istockphoto.com/photos/close-up-portrait-of-brunette-woman-picture-id1154642632?k=20&m=1154642632&s=612x612&w=0&h=dQPjQCt_WOKhD0ysSJG6gIsu7xW65vH8Wf_SaqetIqY=',
+            ),
+            address: AddressModel(
+              city: 'Sydney',
+              country: 'Australia',
+            ),
+            startDate: '11.06.2022',
+            endDate: '12.06.2022',
+            participants: [
+              UserModel(
+                uid: '',
+                firstName: 'Nishit',
+                logoURL:
+                    'https://media.istockphoto.com/photos/close-up-portrait-of-brunette-woman-picture-id1154642632?k=20&m=1154642632&s=612x612&w=0&h=dQPjQCt_WOKhD0ysSJG6gIsu7xW65vH8Wf_SaqetIqY=',
+              ),
+            ],
+            openRequests: [],
+          ),
+        ),
+        SizedBox(height: PXSpacing.spacingS),
+        MeetupCard(
+          model: MeetupModel(
+            title: 'Sunset picnic at Bondi beach',
+            owner: UserModel(
+              firstName: 'Yule',
+              logoURL:
+                  'https://media.istockphoto.com/photos/close-up-portrait-of-brunette-woman-picture-id1154642632?k=20&m=1154642632&s=612x612&w=0&h=dQPjQCt_WOKhD0ysSJG6gIsu7xW65vH8Wf_SaqetIqY=',
+            ),
+            address: AddressModel(
+              city: 'Sydney',
+              country: 'Australia',
+            ),
+            startDate: '11.06.2022',
+            endDate: '12.06.2022',
+            participants: [
+              UserModel(
+                uid: '',
+                firstName: 'Nishit',
+                logoURL:
+                    'https://media.istockphoto.com/photos/close-up-portrait-of-brunette-woman-picture-id1154642632?k=20&m=1154642632&s=612x612&w=0&h=dQPjQCt_WOKhD0ysSJG6gIsu7xW65vH8Wf_SaqetIqY=',
+              ),
+            ],
+            openRequests: [],
+          ),
+        ),
+        SizedBox(height: PXSpacing.spacingS),
+        MeetupCard(
+          model: MeetupModel(
+            title: 'Sunset picnic at Bondi beach',
+            owner: UserModel(
+              firstName: 'Yule',
+              logoURL:
+                  'https://media.istockphoto.com/photos/close-up-portrait-of-brunette-woman-picture-id1154642632?k=20&m=1154642632&s=612x612&w=0&h=dQPjQCt_WOKhD0ysSJG6gIsu7xW65vH8Wf_SaqetIqY=',
+            ),
+            address: AddressModel(
+              city: 'Sydney',
+              country: 'Australia',
+            ),
+            startDate: '11.06.2022',
+            endDate: '12.06.2022',
+            participants: [
+              UserModel(
+                uid: '',
+                firstName: 'Nishit',
+                logoURL:
+                    'https://media.istockphoto.com/photos/close-up-portrait-of-brunette-woman-picture-id1154642632?k=20&m=1154642632&s=612x612&w=0&h=dQPjQCt_WOKhD0ysSJG6gIsu7xW65vH8Wf_SaqetIqY=',
+              ),
+            ],
+            openRequests: [],
+          ),
+        ),
+        SizedBox(height: PXSpacing.spacingS),
+        MeetupCard(
+          model: MeetupModel(
+            title: 'Sunset picnic at Bondi beach',
+            owner: UserModel(
+              firstName: 'Yule',
+              logoURL:
+                  'https://media.istockphoto.com/photos/close-up-portrait-of-brunette-woman-picture-id1154642632?k=20&m=1154642632&s=612x612&w=0&h=dQPjQCt_WOKhD0ysSJG6gIsu7xW65vH8Wf_SaqetIqY=',
+            ),
+            address: AddressModel(
+              city: 'Sydney',
+              country: 'Australia',
+            ),
+            startDate: '11.06.2022',
+            endDate: '12.06.2022',
+            participants: [
+              UserModel(
+                uid: '',
+                firstName: 'Nishit',
+                logoURL:
+                    'https://media.istockphoto.com/photos/close-up-portrait-of-brunette-woman-picture-id1154642632?k=20&m=1154642632&s=612x612&w=0&h=dQPjQCt_WOKhD0ysSJG6gIsu7xW65vH8Wf_SaqetIqY=',
+              ),
+            ],
+            openRequests: [],
+          ),
+        ),
+        SizedBox(height: PXSpacing.spacingS),
+        MeetupCard(
+          model: MeetupModel(
+            title: 'Sunset picnic at Bondi beach',
+            owner: UserModel(
+              firstName: 'Yule',
+              logoURL:
+                  'https://media.istockphoto.com/photos/close-up-portrait-of-brunette-woman-picture-id1154642632?k=20&m=1154642632&s=612x612&w=0&h=dQPjQCt_WOKhD0ysSJG6gIsu7xW65vH8Wf_SaqetIqY=',
+            ),
+            address: AddressModel(
+              city: 'Sydney',
+              country: 'Australia',
+            ),
+            startDate: '11.06.2022',
+            endDate: '12.06.2022',
+            participants: [
+              UserModel(
+                uid: '',
+                firstName: 'Nishit',
+                logoURL:
+                    'https://media.istockphoto.com/photos/close-up-portrait-of-brunette-woman-picture-id1154642632?k=20&m=1154642632&s=612x612&w=0&h=dQPjQCt_WOKhD0ysSJG6gIsu7xW65vH8Wf_SaqetIqY=',
+              ),
+            ],
+            openRequests: [],
+          ),
+        ),
+        SizedBox(height: PXSpacing.spacingS),
       ],
     );
   }

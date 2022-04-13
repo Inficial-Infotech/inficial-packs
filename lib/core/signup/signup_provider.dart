@@ -8,7 +8,9 @@ class SignupProvider {
     final List<Map<String, dynamic>> jsonList = Countries.countryList;
 
     // if (countries == null || countries.isEmpty) {
-    return jsonList.map((Map<String, dynamic> country) => Country.fromJson(country)).toList();
+    return jsonList
+        .map((Map<String, dynamic> country) => Country.fromJson(country))
+        .toList();
     // }
     // List filteredList = jsonList.where((country) {
     //   return countries.contains(country[PropertyName]);

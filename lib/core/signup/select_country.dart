@@ -234,8 +234,9 @@ class _SelectCountryScreenState extends State<SelectCountryScreen> {
                                   .read<SignupRepository>()
                                   .signup(
                                     _signupCubit.state.signupType ==
-                                            SignupType.email || _signupCubit.state.signupType ==
-                                        SignupType.google
+                                                SignupType.email ||
+                                            _signupCubit.state.signupType ==
+                                                SignupType.google
                                         ? _signupCubit.state.email
                                         : '',
                                     _signupCubit.state.name,

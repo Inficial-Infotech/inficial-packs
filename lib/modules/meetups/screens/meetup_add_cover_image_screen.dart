@@ -15,7 +15,8 @@ class MeetupAddCoverImageScreen extends StatefulWidget {
   static const String id = 'MeetupAddCoverImageScreen';
 
   @override
-  _MeetupAddCoverImageScreenState createState() => _MeetupAddCoverImageScreenState();
+  _MeetupAddCoverImageScreenState createState() =>
+      _MeetupAddCoverImageScreenState();
 }
 
 class _MeetupAddCoverImageScreenState extends State<MeetupAddCoverImageScreen> {
@@ -135,12 +136,16 @@ class _MeetupAddCoverImageScreenState extends State<MeetupAddCoverImageScreen> {
                       final List<String> tempImageList = <String>[];
                       tempImageList.addAll(imageURLs);
                       tempImageList.removeAt(selectIndex!);
-                      meetUpCubit.setCoverImage(imageURLs[selectIndex!], tempImageList);
+                      meetUpCubit.setCoverImage(
+                          imageURLs[selectIndex!], tempImageList);
                       navigateToMeetupAddAgreementScreen(context);
                     }
                   } catch (e) {
                     Fluttertoast.showToast(
-                        msg: 'Something was wrong', gravity: ToastGravity.BOTTOM, backgroundColor: PXColor.black, textColor: PXColor.white);
+                        msg: 'Something was wrong',
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: PXColor.black,
+                        textColor: PXColor.white);
                   }
                 },
                 child: images.isEmpty
@@ -177,14 +182,17 @@ class _MeetupAddCoverImageScreenState extends State<MeetupAddCoverImageScreen> {
       imageURLs.add(uploadImageData.imageURL);
       uploadImageDataList.add(uploadImageData.toJson());
     }
-    await context.read<MeetupRepository>().uploadImageFirebase(uploadImageDataList);
+    await context
+        .read<MeetupRepository>()
+        .uploadImageFirebase(uploadImageDataList);
   }
 
   void navigateToMeetupAddAgreementScreen(BuildContext context) {
     Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (BuildContext ctx) => RepositoryProvider<MeetupRepository>.value(
+        builder: (BuildContext ctx) =>
+            RepositoryProvider<MeetupRepository>.value(
           value: context.read<MeetupRepository>(),
           child: BlocProvider<MeetUpCubit>.value(
             value: BlocProvider.of<MeetUpCubit>(context),

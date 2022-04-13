@@ -47,28 +47,32 @@ class MeetupRepository {
         'lng': lng,
       };
 
-      final Response result = await RestApiService().post('mobile-app/publish-meetups', jsonString);
+      final Response result =
+          await RestApiService().post('mobile-app/publish-meetups', jsonString);
 
       log('result : ${result.body}');
       if (result.statusCode == 200) {
         return json.decode(result.body)['data']['result'].toString();
       }
-    } catch (e, st) {
+    } catch (e) {
       rethrow;
     }
     return '';
   }
 
-  Future<void> uploadImageFirebase(List<Map<String, dynamic>> uploadImageDataList) async {
+  Future<void> uploadImageFirebase(
+      List<Map<String, dynamic>> uploadImageDataList) async {
     await FirebaseFirestore.instance
         .collection('MEETUP_IMAGE')
         .doc(DateTime.now().millisecondsSinceEpoch.toString())
-        .set({'images': FieldValue.arrayUnion(uploadImageDataList)}, SetOptions(merge: true));
+        .set({'images': FieldValue.arrayUnion(uploadImageDataList)},
+            SetOptions(merge: true));
   }
 
   Future getDetailsFromPalaceId(String? placeId, String? apiKey) async {
-    String url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$apiKey";
-    final Response result = await RestApiService().get(url,forceUrl: true);
+    final String url =
+        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$apiKey';
+    final Response result = await RestApiService().get(url, forceUrl: true);
     if (result.statusCode == 200) {
       return json.decode(result.body)['result'];
     }
@@ -76,12 +80,12 @@ class MeetupRepository {
   }
 
   Future getDetailsFromCoordinates(LatLng latLng, String? apiKey) async {
-    String url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng.latitude},${latLng.longitude}&key=$apiKey";
-    final Response result = await RestApiService().get(url,forceUrl: true);
+    final String url =
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng.latitude},${latLng.longitude}&key=$apiKey';
+    final Response result = await RestApiService().get(url, forceUrl: true);
     if (result.statusCode == 200) {
       return json.decode(result.body)['results'];
     }
     return null;
   }
-
 }

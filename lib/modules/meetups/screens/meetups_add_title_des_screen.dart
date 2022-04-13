@@ -56,10 +56,12 @@ class _MeetupsAddMeetupScreen extends State<MeetupsAddTitleAndDesScreen> {
               ),
               CupertinoButton.filled(
                 onPressed: () {
-                  if (titleController.text.isEmpty || descriptionController.text.isEmpty) {
+                  if (titleController.text.isEmpty ||
+                      descriptionController.text.isEmpty) {
                     return;
                   }
-                  meetUpCubit.titleAndDes(titleController.text, descriptionController.text);
+                  meetUpCubit.titleAndDes(
+                      titleController.text, descriptionController.text);
                   navigateToMeetUpTitleAndDescriptionScreen(context);
                 },
                 child: const Text('Next'),

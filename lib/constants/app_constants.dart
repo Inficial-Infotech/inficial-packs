@@ -22,7 +22,7 @@ class PXColor {
   static const textLight = Color(0xFF666666);
   static const grey = Color(0xFF707070);
   static const lightGrey = Color(0xFFD8D8D8);
-  static const athensGrey = Color(0xFFF0F2F5);
+  static const athensGrey = Color(0xFFF2F5F7);
   static const white = Color(0xFFFFFFFF);
   static const mysticGreen = Color(0xFFC6D6DD);
   static const lightGreen = Color(0xFFE5F4D7);

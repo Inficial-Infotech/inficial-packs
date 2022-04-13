@@ -6,7 +6,7 @@ class SegmentedControl extends StatefulWidget {
   final int segmentedControlValue;
   final Function(int) callback;
 
-  SegmentedControl({
+  const SegmentedControl({
     required this.items,
     required this.segmentedControlValue,
     required this.callback,
@@ -25,7 +25,7 @@ class _SegmentedControlState extends State<SegmentedControl> {
             .asMap()
             .entries
             .map(
-              (item) => SegmentedControlThumb(
+              (MapEntry<int, String> item) => SegmentedControlThumb(
                 title: item.value,
                 isActive: widget.segmentedControlValue == item.key,
                 callback: () => widget.callback(item.key),
@@ -38,15 +38,15 @@ class _SegmentedControlState extends State<SegmentedControl> {
 }
 
 class SegmentedControlThumb extends StatefulWidget {
-  final String title;
-  final bool isActive;
-  final Function() callback;
-
-  SegmentedControlThumb({
+  const SegmentedControlThumb({
     required this.title,
     required this.isActive,
     required this.callback,
   });
+
+  final String title;
+  final bool isActive;
+  final Function() callback;
 
   @override
   State<SegmentedControlThumb> createState() => _SegmentedControlThumbState();
@@ -56,26 +56,26 @@ class _SegmentedControlThumbState extends State<SegmentedControlThumb> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: PXSpacing.spacingM),
+      margin: const EdgeInsets.only(right: PXSpacing.spacingM),
       child: GestureDetector(
         onTap: () => widget.callback(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // TODO: Fix animation
+            // TODO: Fix animation using AnimatedCrossFade
             AnimatedDefaultTextStyle(
-              duration: Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 200),
               style: widget.isActive
                   ? PXTextStyle.styleLBold
                   : PXTextStyle.styleLRegular,
               child: Text(
-                this.widget.title,
-                style: TextStyle(color: PXColor.black),
+                widget.title,
+                style: const TextStyle(color: PXColor.black),
               ),
             ),
-            SizedBox(height: PXSpacing.spacingXXS),
+            const SizedBox(height: PXSpacing.spacingXXS),
             AnimatedContainer(
-              duration: Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 200),
               height: 2,
               width: widget.isActive ? 40 : 0,
               decoration: BoxDecoration(

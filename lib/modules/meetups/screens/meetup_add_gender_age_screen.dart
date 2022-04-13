@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:packs/constants/app_constants.dart';
 import 'package:packs/modules/meetups/cubit/meetup_cubit.dart';
 import 'package:packs/modules/meetups/repository/meetup_repository.dart';
 import 'package:packs/modules/meetups/screens/meetup_add_cover_image_screen.dart';
@@ -11,7 +12,8 @@ class MeetupAddGenderAgeScreen extends StatefulWidget {
   static const String id = 'MeetupAddGenderAgeScreen';
 
   @override
-  _MeetupAddGenderAgeScreenState createState() => _MeetupAddGenderAgeScreenState();
+  _MeetupAddGenderAgeScreenState createState() =>
+      _MeetupAddGenderAgeScreenState();
 }
 
 class _MeetupAddGenderAgeScreenState extends State<MeetupAddGenderAgeScreen> {
@@ -50,7 +52,8 @@ class _MeetupAddGenderAgeScreenState extends State<MeetupAddGenderAgeScreen> {
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                   child: Text(selectedValue.isEmpty ? 'Gender' : selectedValue),
                 ),
               ),
@@ -100,7 +103,6 @@ class _MeetupAddGenderAgeScreenState extends State<MeetupAddGenderAgeScreen> {
                 height: 60,
               ),
               CupertinoButton.filled(
-
                 onPressed: () {
                   if (selectedValue.isEmpty ||
                       startAgeController.text.isEmpty ||
@@ -131,17 +133,19 @@ class _MeetupAddGenderAgeScreenState extends State<MeetupAddGenderAgeScreen> {
       builder: (BuildContext builder) {
         return Container(
           height: MediaQuery.of(context).copyWith().size.height * 0.25,
-          color: Colors.white,
+          color: PXColor.white,
           child: CupertinoPicker(
+            itemExtent: 24,
+            diameterRatio: 1,
+            useMagnifier: true,
+            magnification: 1.3,
             onSelectedItemChanged: (int value) {
               selectedValue = genderList[value];
               setState(() {});
             },
-            itemExtent: 25,
-            diameterRatio: 1,
-            useMagnifier: true,
-            magnification: 1.3,
-            children: List<Widget>.generate(genderList.length, (int index) => Text(genderList[index])).toList(),
+            children: List<Widget>.generate(
+                    genderList.length, (int index) => Text(genderList[index]))
+                .toList(),
           ),
         );
       },
@@ -149,11 +153,11 @@ class _MeetupAddGenderAgeScreenState extends State<MeetupAddGenderAgeScreen> {
   }
 
   void navigateToMeetupAddCoverImageScreen(BuildContext context) {
-
     Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (BuildContext ctx) => RepositoryProvider<MeetupRepository>.value(
+        builder: (BuildContext ctx) =>
+            RepositoryProvider<MeetupRepository>.value(
           value: context.read<MeetupRepository>(),
           child: BlocProvider<MeetUpCubit>.value(
             value: BlocProvider.of<MeetUpCubit>(context),

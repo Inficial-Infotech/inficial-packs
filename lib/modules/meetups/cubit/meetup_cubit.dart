@@ -37,7 +37,8 @@ class MeetUpCubit extends Cubit<MeetUpState> {
     );
   }
 
-  void setDateAndTime(String startDate, String startTime, String endDate, String endTime) {
+  void setDateAndTime(
+      String startDate, String startTime, String endDate, String endTime) {
     emit(
       state.copyWith(
         startDate: startDate,
@@ -48,7 +49,8 @@ class MeetUpCubit extends Cubit<MeetUpState> {
     );
   }
 
-  void setGenderAndAeg(String gender, int minAge, int maxAge, int maxNumberOfParticipants) {
+  void setGenderAndAeg(
+      String gender, int minAge, int maxAge, int maxNumberOfParticipants) {
     emit(
       state.copyWith(
         gender: gender,
@@ -60,14 +62,20 @@ class MeetUpCubit extends Cubit<MeetUpState> {
   }
 
   void setArea(String address, double lat, double lng) {
-    emit(state.copyWith(address: address,lat: lat,lng: lng));
+    emit(state.copyWith(address: address, lat: lat, lng: lng));
   }
 
-  Future<UploadImageDetails> uploadFile(String identifier, String imageName) async {
+  Future<UploadImageDetails> uploadFile(
+      String identifier, String imageName) async {
     try {
-      final String? filePath = await FlutterAbsolutePath.getAbsolutePath(identifier);
+      final String? filePath =
+          await FlutterAbsolutePath.getAbsolutePath(identifier);
       firebase_storage.UploadTask uploadTask;
-      final firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance.ref().child('images').child(imageName);
+      final firebase_storage.Reference ref = firebase_storage
+          .FirebaseStorage.instance
+          .ref()
+          .child('images')
+          .child(imageName);
       uploadTask = ref.putFile(io.File(filePath!));
       final String imageUrl = await (await uploadTask).ref.getDownloadURL();
       return UploadImageDetails(

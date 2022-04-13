@@ -17,8 +17,7 @@ class MeetUpState extends Equatable {
     this.lng = 0.0,
     this.minAge = 0,
     this.maxAge = 0,
-    this.maxNumberOfParticipants = 0,
-
+    this.maxParticipants = 0,
   });
 
   String category;
@@ -36,7 +35,7 @@ class MeetUpState extends Equatable {
   List<String> imageURLs;
   int minAge;
   int maxAge;
-  int maxNumberOfParticipants;
+  int maxParticipants;
 
   @override
   List<Object> get props => [
@@ -51,7 +50,7 @@ class MeetUpState extends Equatable {
         minAge,
         maxAge,
         imageURLs,
-        maxNumberOfParticipants,
+        maxParticipants,
         coverImageURL,
         address,
         lat,
@@ -87,10 +86,10 @@ class MeetUpState extends Equatable {
       minAge: minAge ?? this.minAge,
       gender: gender ?? this.gender,
       maxAge: maxAge ?? this.maxAge,
+      maxParticipants: maxNumberOfParticipants ?? maxParticipants,
       address: address ?? this.address,
       lat: lat ?? this.lat,
       lng: lng ?? this.lng,
-      maxNumberOfParticipants: maxNumberOfParticipants ?? this.maxNumberOfParticipants,
       coverImageURL: coverImageURL ?? this.coverImageURL,
       imageURLs: imageURLs ?? this.imageURLs,
     );

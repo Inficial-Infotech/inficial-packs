@@ -136,7 +136,8 @@ class AuthenticationRepository {
 
   Future<User> signUpWithCredential(AuthCredential credential) async {
     try {
-      final UserCredential result = await _auth.signInWithCredential(credential);
+      final UserCredential result =
+          await _auth.signInWithCredential(credential);
       if (result.user == null) {
         throw const LogInWithEmailAndPasswordFailure();
       }
