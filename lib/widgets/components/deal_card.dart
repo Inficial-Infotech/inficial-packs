@@ -185,12 +185,14 @@ class _DealCardState extends State<DealCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Zoey",style: PXTextStyle.styleMBold,),
-                  Text("Female, 21",style: PXTextStyle.styleSRegular.copyWith(color: PXColor.textLight),),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Zoey",style: PXTextStyle.styleMBold,),
+                    Text("Female, 21",style: PXTextStyle.styleSRegular.copyWith(color: PXColor.textLight),),
+                  ],
+                ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

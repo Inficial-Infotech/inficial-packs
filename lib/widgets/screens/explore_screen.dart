@@ -56,6 +56,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
     return CupertinoPageScaffold(
       resizeToAvoidBottomInset: false,
       child: SafeArea(
+        bottom: false,
         child: Stack(
           children: [
             ExploreMap(dealModels: _dealModels),
@@ -109,11 +110,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 ),
               ),
             ),
-
             SizedBox.expand(
               child: DraggableScrollableSheet(
-                initialChildSize: 0.25,
-                minChildSize: 0.25,
+                initialChildSize: 0.3,
+                minChildSize: 0.3,
                 maxChildSize: 0.88,
                 snap: true,
                 controller: draggableScrollableController,
