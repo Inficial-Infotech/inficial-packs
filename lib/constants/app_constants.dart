@@ -82,14 +82,19 @@ class PXTextStyle {
     fontSize: PXFontSize.body,
     height: PXLineHeight.heightM,
   );
+  static const TextStyle styleSBold = TextStyle(
+    fontSize: PXFontSize.body,
+    height: PXLineHeight.heightM,
+    fontWeight: FontWeight.bold,
 
+  );
   // Mark: - M
   static const TextStyle styleMRegular = TextStyle(
     fontSize: PXFontSize.body,
     height: PXLineHeight.heightM,
   );
   static const TextStyle styleMBold = TextStyle(
-    fontSize: PXFontSize.body,
+    fontSize: PXFontSize.headline,
     height: PXLineHeight.heightM,
     fontWeight: FontWeight.bold,
   );
@@ -132,3 +137,17 @@ class PXBorderRadius {
   static const double radiusM = 16;
   static const double radiusS = 8;
 }
+
+// images
+
+class PXImages {
+  static const String calenderCheck = 'assets/images/calender_check.png';
+  static const String adventure = 'assets/images/advanture.png';
+  static const String meetups = 'assets/images/meetups.png';
+  static const String voucher = 'assets/images/voucher.png';
+  static const String blackMarker = 'assets/icon/black_marker.png';
+  static const String gender = 'assets/images/genderIcon.png';
+  static const String cake = 'assets/images/cake.png';
+}
+
+

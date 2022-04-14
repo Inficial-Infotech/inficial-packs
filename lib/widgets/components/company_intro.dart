@@ -29,22 +29,26 @@ class CompanyIntro extends StatelessWidget {
               // TODO: Handle nullable
               Text(
                 this.model.name!,
-                style: PXTextStyle.styleMRegular,
+                style: PXTextStyle.styleLBold,
               ),
               if (this.model.address != null)
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.location_pin,
-                      size: PXFontSize.sizeXS,
-                      color: PXColor.textLight,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 3.0),
+                      child: Image.asset(PXImages.blackMarker,height: 15,width: 15, color: PXColor.textLight),
                     ),
                     SizedBox(width: PXSpacing.spacingXS),
                     Row(
                       children: [
-                        Text(
-                          '${this.model.address!.city!}, ${this.model.address!.country!}',
-                          style: PXTextStyle.styleXSRegular,
+                        Container(
+                          width: MediaQuery.of(context).size.width / 2,
+                          child: Text(
+                            '${this.model.address!.city!}, ${this.model.address!.country!}',
+                            style: PXTextStyle.styleSRegular.copyWith(color: PXColor.textLight),
+                          ),
                         ),
                       ],
                     ),
