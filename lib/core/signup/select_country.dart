@@ -31,6 +31,17 @@ class _SelectCountryScreenState extends State<SelectCountryScreen> {
   bool isOpenPicker = false;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+ int getProviderBySignUpType(SignupType signupType) {
+    switch (signupType){
+      case SignupType.phone : { return 1; }
+      case SignupType.email : { return 1; }
+      case SignupType.google : { return 2; }
+      case SignupType.facebook : { return 3; }
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     SignupCubit _signupCubit = BlocProvider.of<SignupCubit>(context);
@@ -251,6 +262,7 @@ class _SelectCountryScreenState extends State<SelectCountryScreen> {
                                     _signupCubit.state.smsCode,
                                     _signupCubit.state.verificationId,
                                     _signupCubit.state.emailCode,
+                                  getProviderBySignUpType(_signupCubit.state.signupType)
                                   );
 
                               if (result) {

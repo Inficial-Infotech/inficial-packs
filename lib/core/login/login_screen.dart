@@ -251,7 +251,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   await _userRepository
                                                       .getUserData(
                                                           uid: googleUser.id);
-                                              globals.currentUserData = user!;
+                                              if (user != null) {
+                                                globals.currentUserData = user;
+                                              }
                                             } else {
                                               showFailureSnackBar(
                                                   'User not found');
