@@ -86,7 +86,6 @@ class PXTextStyle {
     fontSize: PXFontSize.body,
     height: PXLineHeight.heightM,
     fontWeight: FontWeight.bold,
-
   );
   // Mark: - M
   static const TextStyle styleMRegular = TextStyle(
@@ -149,5 +148,3 @@ class PXImages {
   static const String gender = 'assets/images/genderIcon.png';
   static const String cake = 'assets/images/cake.png';
 }
-
-

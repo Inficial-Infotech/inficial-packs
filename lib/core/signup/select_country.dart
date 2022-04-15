@@ -32,15 +32,26 @@ class _SelectCountryScreenState extends State<SelectCountryScreen> {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
- int getProviderBySignUpType(SignupType signupType) {
-    switch (signupType){
-      case SignupType.phone : { return 1; }
-      case SignupType.email : { return 1; }
-      case SignupType.google : { return 2; }
-      case SignupType.facebook : { return 3; }
+  int getProviderBySignUpType(SignupType signupType) {
+    switch (signupType) {
+      case SignupType.phone:
+        {
+          return 1;
+        }
+      case SignupType.email:
+        {
+          return 1;
+        }
+      case SignupType.google:
+        {
+          return 2;
+        }
+      case SignupType.facebook:
+        {
+          return 3;
+        }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -244,26 +255,26 @@ class _SelectCountryScreenState extends State<SelectCountryScreen> {
                               final bool result = await context
                                   .read<SignupRepository>()
                                   .signup(
-                                    _signupCubit.state.signupType ==
-                                                SignupType.email ||
-                                            _signupCubit.state.signupType ==
-                                                SignupType.google
-                                        ? _signupCubit.state.email
-                                        : '',
-                                    _signupCubit.state.name,
-                                    _signupCubit.state.signupType ==
-                                            SignupType.phone
-                                        ? '${_signupCubit.state.country.dialCode}${_signupCubit.state.phone}'
-                                        : '',
-                                    _signupCubit.state.userId,
-                                    _signupCubit.state.countryExploring.name!,
-                                    _signupCubit.state.signupType ==
-                                        SignupType.phone,
-                                    _signupCubit.state.smsCode,
-                                    _signupCubit.state.verificationId,
-                                    _signupCubit.state.emailCode,
-                                  getProviderBySignUpType(_signupCubit.state.signupType)
-                                  );
+                                      _signupCubit.state.signupType ==
+                                                  SignupType.email ||
+                                              _signupCubit.state.signupType ==
+                                                  SignupType.google
+                                          ? _signupCubit.state.email
+                                          : '',
+                                      _signupCubit.state.name,
+                                      _signupCubit.state.signupType ==
+                                              SignupType.phone
+                                          ? '${_signupCubit.state.country.dialCode}${_signupCubit.state.phone}'
+                                          : '',
+                                      _signupCubit.state.userId,
+                                      _signupCubit.state.countryExploring.name!,
+                                      _signupCubit.state.signupType ==
+                                          SignupType.phone,
+                                      _signupCubit.state.smsCode,
+                                      _signupCubit.state.verificationId,
+                                      _signupCubit.state.emailCode,
+                                      getProviderBySignUpType(
+                                          _signupCubit.state.signupType));
 
                               if (result) {
                                 Fluttertoast.showToast(

@@ -39,7 +39,8 @@ class SignupRepository {
       bool isPhone,
       String smsCode,
       String verificationId,
-      String emailCode,int provider) async {
+      String emailCode,
+      int provider) async {
     // String? userId;
     // if (!isPhone) {
     //   try {
@@ -65,7 +66,7 @@ class SignupRepository {
       'uid': uid,
       'countryOfInterest': countryOfInterest,
       'name': name,
-      'provider' : provider
+      'provider': provider
     });
     if (result.statusCode == 200) {
       final user_repo.User? user = await _userRepository.getUserData(uid: uid);

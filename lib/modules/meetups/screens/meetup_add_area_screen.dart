@@ -36,7 +36,6 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
   BitmapDescriptor? customIcon;
   String kGoogleApiKey = 'AIzaSyCB1I6C9IOuzLMSW0ddQXaok4kKv4siCQ4';
 
-
   @override
   void initState() {
     super.initState();
@@ -46,14 +45,15 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
   Future<void> _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
     mapController.setMapStyle(Utils.mapStyle);
-    BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(12, 12)),
-        'assets/icon/marker.png')
+    BitmapDescriptor.fromAssetImage(
+            const ImageConfiguration(size: Size(12, 12)),
+            'assets/icon/marker.png')
         .then((BitmapDescriptor d) {
       customIcon = d;
     });
     final Position position = await _determinePosition();
     markerPosition = LatLng(position.latitude, position.longitude);
-    final Marker marker =  Marker(
+    final Marker marker = Marker(
         onTap: () {
           if (kDebugMode) {
             print('Tapped');
@@ -68,9 +68,7 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
           getUserLocation(newPosition);
         });
     markers[const MarkerId('Marker')] = marker;
-    setState(() {
-
-    });
+    setState(() {});
     mapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
@@ -78,7 +76,6 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
       ),
     );
   }
-
 
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
@@ -114,10 +111,15 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
   }
+
   getUserLocation(LatLng latLng) async {
-    await context.read<MeetupRepository>().getDetailsFromCoordinates(latLng, kGoogleApiKey).then((response) {
+    await context
+        .read<MeetupRepository>()
+        .getDetailsFromCoordinates(latLng, kGoogleApiKey)
+        .then((response) {
       log(response.toString());
       if (response != null) {
         area = response[0]['formatted_address'].toString();
@@ -126,16 +128,17 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
             area = element['formatted_address'].toString();
           }
         });
-        setState(() {
-        });
+        setState(() {});
       }
     });
   }
 
-  updateMarker(){
-    final Marker marker = markers.values.toList().firstWhere((Marker item) => item.markerId == const MarkerId('Marker'));
+  updateMarker() {
+    final Marker marker = markers.values
+        .toList()
+        .firstWhere((Marker item) => item.markerId == const MarkerId('Marker'));
 
-    Marker _marker =  Marker(
+    Marker _marker = Marker(
         onTap: () {
           if (kDebugMode) {
             print('Tapped');
@@ -156,15 +159,12 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
-      body:SingleChildScrollView(
+      body: SingleChildScrollView(
         child: SafeArea(
-
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -175,52 +175,80 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
                     icon: CupertinoIcons.back,
                     iconColor: Colors.black,
                     size: 50,
-                    onTap: ()  {
-
-                    },
+                    onTap: () {},
                   ),
                   PXBarButton(
                     icon: CupertinoIcons.clear,
                     iconColor: Colors.black,
                     size: 40,
-                    onTap: ()  {
+                    onTap: () {
                       Navigator.pop(context);
                     },
                   ),
-
                 ],
               ),
               Container(
-                margin: const EdgeInsets.only(left: 20,top: 10,right: 20),
+                margin: const EdgeInsets.only(left: 20, top: 10, right: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Pick area',style: TextStyle(fontSize: 24,fontWeight: FontWeight.w800),),
-                    const SizedBox(height: 15,),
-                   const Text('Drop a pin roughly where your meetup will take place. For safety reasons we don’t display exact meeting points. You can let people know where to meet later on. ',style: TextStyle(fontSize: 15,fontWeight: FontWeight.normal),),
-                   const SizedBox(height: 20,),
-                     Row(
-                      children: [
-                         Image.asset('assets/icon/black_marker.png',height: 16),
-                         const SizedBox(width: 10,),
-                         const Text('Pick a rough area',style: TextStyle(fontSize: 15,fontWeight: FontWeight.normal),),                      ],
+                    const Text(
+                      'Pick area',
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
                     ),
-                    const SizedBox(height: 16,),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    const Text(
+                      'Drop a pin roughly where your meetup will take place. For safety reasons we don’t display exact meeting points. You can let people know where to meet later on. ',
+                      style: TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.normal),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Image.asset('assets/icon/black_marker.png', height: 16),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Text(
+                          'Pick a rough area',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
                     GestureDetector(
                       onTap: () async {
                         await PlacesAutocomplete.show(
-                            context: context,
-                            apiKey: kGoogleApiKey,
-                            language: 'en',
-                            types: [''],
-                            components: [],
-                            strictbounds: false,
-                            mode: Mode.overlay, // Mode.fullscreen
-                         ).then((Prediction? value) async {
-                          await context.read<MeetupRepository>().getDetailsFromPalaceId(value!.placeId, kGoogleApiKey).then((response) {
+                          context: context,
+                          apiKey: kGoogleApiKey,
+                          language: 'en',
+                          types: [''],
+                          components: [],
+                          strictbounds: false,
+                          mode: Mode.overlay, // Mode.fullscreen
+                        ).then((Prediction? value) async {
+                          await context
+                              .read<MeetupRepository>()
+                              .getDetailsFromPalaceId(
+                                  value!.placeId, kGoogleApiKey)
+                              .then((response) {
                             if (response != null) {
                               area = response['formatted_address'].toString();
-                              markerPosition = LatLng(double.parse(response['geometry']['location']['lat'].toString()), double.parse(response['geometry']['location']['lng'].toString()));
+                              markerPosition = LatLng(
+                                  double.parse(response['geometry']['location']
+                                          ['lat']
+                                      .toString()),
+                                  double.parse(response['geometry']['location']
+                                          ['lng']
+                                      .toString()));
                               mapController.animateCamera(
                                 CameraUpdate.newCameraPosition(
                                   CameraPosition(
@@ -235,45 +263,71 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
                       child: Container(
                         width: MediaQuery.of(context).size.width,
                         decoration: const BoxDecoration(
-                          color: PXColor.boxColor,
-                            borderRadius: BorderRadius.all(Radius.circular(12))
-
-                        ),
+                            color: PXColor.boxColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12))),
                         padding: const EdgeInsets.all(20),
-                        child: Text(area!,),
+                        child: Text(
+                          area!,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 16,),
+                    const SizedBox(
+                      height: 16,
+                    ),
                     SizedBox(
                       height: 280,
                       child: ClipRRect(
-                        borderRadius: const BorderRadius.all(Radius.circular(12)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12)),
                         child: GoogleMap(
-                          initialCameraPosition: CameraPosition(target: initialPosition, zoom: 1),
+                          initialCameraPosition:
+                              CameraPosition(target: initialPosition, zoom: 1),
                           markers: markers.values.toSet(),
                           myLocationEnabled: true,
                           gestureRecognizers: Set()
-                            ..add(Factory<PanGestureRecognizer>(() => PanGestureRecognizer()))
-                            ..add(Factory<ScaleGestureRecognizer>(() => ScaleGestureRecognizer()))
-                            ..add(Factory<TapGestureRecognizer>(() => TapGestureRecognizer()))
-                            ..add(Factory<VerticalDragGestureRecognizer>(() => VerticalDragGestureRecognizer())),
+                            ..add(Factory<PanGestureRecognizer>(
+                                () => PanGestureRecognizer()))
+                            ..add(Factory<ScaleGestureRecognizer>(
+                                () => ScaleGestureRecognizer()))
+                            ..add(Factory<TapGestureRecognizer>(
+                                () => TapGestureRecognizer()))
+                            ..add(Factory<VerticalDragGestureRecognizer>(
+                                () => VerticalDragGestureRecognizer())),
                           onMapCreated: _onMapCreated,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16,),
-                    const Text('Press and hold to drop your pin',style: TextStyle(fontSize: 15,fontWeight: FontWeight.normal),),
-                    const SizedBox(height: 50,),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    const Text(
+                      'Press and hold to drop your pin',
+                      style: TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.normal),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
                     SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        child: CupertinoButton(onPressed: () {
-                          if (area! == '') {
-                            return;
-                          } else {
-                            meetUpCubit.setArea(area!, markerPosition!.latitude, markerPosition!.longitude);
-                          }
-                          navigateToMeetupAddGenderAgeScreen(context);
-                        } ,color: PXColor.black,borderRadius: const BorderRadius.all(Radius.circular(25)),child: const Text('Next'),))
+                        child: CupertinoButton(
+                          onPressed: () {
+                            if (area! == '') {
+                              return;
+                            } else {
+                              meetUpCubit.setArea(
+                                  area!,
+                                  markerPosition!.latitude,
+                                  markerPosition!.longitude);
+                            }
+                            navigateToMeetupAddGenderAgeScreen(context);
+                          },
+                          color: PXColor.black,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(25)),
+                          child: const Text('Next'),
+                        ))
                   ],
                 ),
               )
@@ -283,12 +337,13 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
       ),
     );
   }
-  void navigateToMeetupAddGenderAgeScreen(BuildContext context) {
 
+  void navigateToMeetupAddGenderAgeScreen(BuildContext context) {
     Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (BuildContext ctx) => RepositoryProvider<MeetupRepository>.value(
+        builder: (BuildContext ctx) =>
+            RepositoryProvider<MeetupRepository>.value(
           value: context.read<MeetupRepository>(),
           child: BlocProvider<MeetUpCubit>.value(
             value: BlocProvider.of<MeetUpCubit>(context),
@@ -298,5 +353,4 @@ class _MeetupAddAreaScreenState extends State<MeetupAddAreaScreen> {
       ),
     );
   }
-
 }

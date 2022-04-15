@@ -44,13 +44,11 @@ class _ExploreMapState extends State<ExploreMap> {
     );
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -70,67 +68,115 @@ class _ExploreMapState extends State<ExploreMap> {
       }
     }
 
-    return CustomGoogleMapMarkerBuilder(                                                                           // this conditions only for showing different marker purpose. it will be replace with actual condition later
-      customMarkers: List.generate(customMarkers.length, (index) => MarkerData(marker: customMarkers[index], child: index % 3 == 0 ? adventureMarker('\$98') : index % 3 == 1 ? voucherMarker('\$9.56') :  meetupMarker('Tomorrow'))),
-      builder: (BuildContext , Set<Marker>? markers) {
-          return GoogleMap(
-            initialCameraPosition: CameraPosition(target: initialPosition, zoom: 1),
-            mapType: MapType.normal,
-            markers: markers ?? {},
-            myLocationEnabled: true,
-            // gestureRecognizers: Set()
-            //   ..add(Factory<PanGestureRecognizer>(() => PanGestureRecognizer()))
-            //   ..add(Factory<ScaleGestureRecognizer>(() => ScaleGestureRecognizer()))
-            //   ..add(Factory<TapGestureRecognizer>(() => TapGestureRecognizer()))
-            //   ..add(Factory<VerticalDragGestureRecognizer>(() => VerticalDragGestureRecognizer())),
-            onMapCreated: _onMapCreated,
-          );
+    return CustomGoogleMapMarkerBuilder(
+      // this conditions only for showing different marker purpose. it will be replace with actual condition later
+      customMarkers: List.generate(
+          customMarkers.length,
+          (index) => MarkerData(
+              marker: customMarkers[index],
+              child: index % 3 == 0
+                  ? adventureMarker('\$98')
+                  : index % 3 == 1
+                      ? voucherMarker('\$9.56')
+                      : meetupMarker('Tomorrow'))),
+      builder: (BuildContext, Set<Marker>? markers) {
+        return GoogleMap(
+          initialCameraPosition:
+              CameraPosition(target: initialPosition, zoom: 1),
+          mapType: MapType.normal,
+          markers: markers ?? {},
+          myLocationEnabled: true,
+          // gestureRecognizers: Set()
+          //   ..add(Factory<PanGestureRecognizer>(() => PanGestureRecognizer()))
+          //   ..add(Factory<ScaleGestureRecognizer>(() => ScaleGestureRecognizer()))
+          //   ..add(Factory<TapGestureRecognizer>(() => TapGestureRecognizer()))
+          //   ..add(Factory<VerticalDragGestureRecognizer>(() => VerticalDragGestureRecognizer())),
+          onMapCreated: _onMapCreated,
+        );
       },
-
-    );
-  }
-  
-  Widget adventureMarker(String? text ) {
-    return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(PXBorderRadius.radiusXL),color: PXColor.white),
-      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-      child: Row(
-        children: [
-          Image.asset(PXImages.adventure,height: 10,width: 10,),
-          SizedBox(width: 5,),
-          Text(text!, style: TextStyle(color: PXColor.black,fontSize: PXFontSize.sizeS,fontWeight: FontWeight.bold), )
-        ],
-      ),
-    );
-  }
-  Widget meetupMarker(String? text ) {
-    return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(PXBorderRadius.radiusXL),color: PXColor.black),
-      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-      child: Row(
-        children: [
-          Image.asset(PXImages.meetups,height: 10,width: 10,color: PXColor.white),
-          SizedBox(width: 5,),
-          Text(text!, style: TextStyle(color: PXColor.white,fontSize: PXFontSize.sizeS,fontWeight: FontWeight.bold), )
-        ],
-      ),
     );
   }
 
-  Widget voucherMarker(String? text ) {
+  Widget adventureMarker(String? text) {
     return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(PXBorderRadius.radiusXL),color: PXColor.white),
-      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(PXBorderRadius.radiusXL),
+          color: PXColor.white),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: Row(
         children: [
-          Image.asset(PXImages.voucher,height: 10,width: 10,),
-          SizedBox(width: 5,),
-          Text(text!, style: TextStyle(color: PXColor.black,fontSize: PXFontSize.sizeS,fontWeight: FontWeight.bold), )
+          Image.asset(
+            PXImages.adventure,
+            height: 10,
+            width: 10,
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            text!,
+            style: TextStyle(
+                color: PXColor.black,
+                fontSize: PXFontSize.sizeS,
+                fontWeight: FontWeight.bold),
+          )
         ],
       ),
     );
   }
-  
+
+  Widget meetupMarker(String? text) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(PXBorderRadius.radiusXL),
+          color: PXColor.black),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: Row(
+        children: [
+          Image.asset(PXImages.meetups,
+              height: 10, width: 10, color: PXColor.white),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            text!,
+            style: TextStyle(
+                color: PXColor.white,
+                fontSize: PXFontSize.sizeS,
+                fontWeight: FontWeight.bold),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget voucherMarker(String? text) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(PXBorderRadius.radiusXL),
+          color: PXColor.white),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: Row(
+        children: [
+          Image.asset(
+            PXImages.voucher,
+            height: 10,
+            width: 10,
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            text!,
+            style: TextStyle(
+                color: PXColor.black,
+                fontSize: PXFontSize.sizeS,
+                fontWeight: FontWeight.bold),
+          )
+        ],
+      ),
+    );
+  }
 }
 
 class Utils {

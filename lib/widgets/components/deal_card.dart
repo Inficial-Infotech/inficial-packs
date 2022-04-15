@@ -114,10 +114,11 @@ class _DealCardState extends State<DealCard> {
                   CompanyIntro(
                     model: CompanyModel(
                       logoURL:
-                      'https://d1wnwqwep8qkqc.cloudfront.net/uploads/stage/stage_image/41544/optimized_large_thumb_stage.jpg',
+                          'https://d1wnwqwep8qkqc.cloudfront.net/uploads/stage/stage_image/41544/optimized_large_thumb_stage.jpg',
                       name: 'Jeep Xplorers',
                       address: AddressModel(
-                          city: widget.model.address!.city, country: widget.model.address!.country),
+                          city: widget.model.address!.city,
+                          country: widget.model.address!.country),
                     ),
                   ),
                   Container(
@@ -147,14 +148,14 @@ class _DealCardState extends State<DealCard> {
       padding: const EdgeInsets.all(PXSpacing.spacingM),
       child: Column(
         children: [
-
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               if (widget.model.titleImage != null)
                 ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(PXBorderRadius.radiusXXL)),
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(PXBorderRadius.radiusXXL)),
                   child: Image.network(
                     widget.model.titleImage!,
                     height: 65.0,
@@ -174,13 +175,16 @@ class _DealCardState extends State<DealCard> {
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: PXColor.lightGrey),
-                  borderRadius: const BorderRadius.all(Radius.circular(PXBorderRadius.radiusXXL)),
+                  borderRadius: const BorderRadius.all(
+                      Radius.circular(PXBorderRadius.radiusXXL)),
                 ),
                 child: heartButton(),
               )
             ],
           ),
-          SizedBox(height: PXSpacing.spacingM,),
+          SizedBox(
+            height: PXSpacing.spacingM,
+          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -189,8 +193,15 @@ class _DealCardState extends State<DealCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Zoey",style: PXTextStyle.styleMBold,),
-                    Text("Female, 21",style: PXTextStyle.styleSRegular.copyWith(color: PXColor.textLight),),
+                    Text(
+                      "Zoey",
+                      style: PXTextStyle.styleMBold,
+                    ),
+                    Text(
+                      "Female, 21",
+                      style: PXTextStyle.styleSRegular
+                          .copyWith(color: PXColor.textLight),
+                    ),
                   ],
                 ),
               ),
@@ -199,9 +210,18 @@ class _DealCardState extends State<DealCard> {
                 children: [
                   Row(
                     children: [
-                      Image.asset(PXImages.calenderCheck,height: 15,width: 15,),
-                      SizedBox(width: PXSpacing.spacingXS,),
-                      Text('11.06.2022',style: PXTextStyle.styleSBold,)
+                      Image.asset(
+                        PXImages.calenderCheck,
+                        height: 15,
+                        width: 15,
+                      ),
+                      SizedBox(
+                        width: PXSpacing.spacingXS,
+                      ),
+                      Text(
+                        '11.06.2022',
+                        style: PXTextStyle.styleSBold,
+                      )
                     ],
                   ),
                   Row(
@@ -210,12 +230,24 @@ class _DealCardState extends State<DealCard> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 3.0),
-                        child: Image.asset(PXImages.blackMarker,height: 15,width: 15,),
+                        child: Image.asset(
+                          PXImages.blackMarker,
+                          height: 15,
+                          width: 15,
+                        ),
                       ),
-                      SizedBox(width: PXSpacing.spacingXS,),
+                      SizedBox(
+                        width: PXSpacing.spacingXS,
+                      ),
                       Container(
                           width: MediaQuery.of(context).size.width / 3,
-                          child: Text(widget.model.address!.city!+", "+widget.model.address!.country!,style: PXTextStyle.styleSRegular.copyWith(color: PXColor.textLight),))
+                          child: Text(
+                            widget.model.address!.city! +
+                                ", " +
+                                widget.model.address!.country!,
+                            style: PXTextStyle.styleSRegular
+                                .copyWith(color: PXColor.textLight),
+                          ))
                     ],
                   ),
                 ],
@@ -223,49 +255,52 @@ class _DealCardState extends State<DealCard> {
               SizedBox(
                 width: 100,
                 child: Stack(
-                  children: List.generate(4, (index) =>
-                    index == 0 ? roundedImage() : index == 3 ? Positioned(
-                        left: index * 15,
-                        child: Container(
-                          height: 32,
-                          width: 32,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: PXColor.white,width: 1.5),
-                              borderRadius: BorderRadius.all(Radius.circular(PXBorderRadius.radiusXXL)),
-                              color: PXColor.lightGrey
-                          ),
-                          child:Text("4+",style: PXTextStyle.styleSBold),
-                        )
-                    ) : Positioned(
-                        left: index * 15,
-                        child: roundedImage()
-                    )
-                  )
-                ),
+                    children: List.generate(
+                        4,
+                        (index) => index == 0
+                            ? roundedImage()
+                            : index == 3
+                                ? Positioned(
+                                    left: index * 15,
+                                    child: Container(
+                                      height: 32,
+                                      width: 32,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: PXColor.white, width: 1.5),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(
+                                                  PXBorderRadius.radiusXXL)),
+                                          color: PXColor.lightGrey),
+                                      child: Text("4+",
+                                          style: PXTextStyle.styleSBold),
+                                    ))
+                                : Positioned(
+                                    left: index * 15, child: roundedImage()))),
               )
             ],
           )
-
         ],
       ),
     );
   }
 
-
   Widget roundedImage() {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: PXColor.white,width: 1.5),
-        borderRadius: BorderRadius.all(Radius.circular(PXBorderRadius.radiusXXL)),
+        border: Border.all(color: PXColor.white, width: 1.5),
+        borderRadius:
+            BorderRadius.all(Radius.circular(PXBorderRadius.radiusXXL)),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(PXBorderRadius.radiusXXL)),
-        child: Image.network(widget.model.titleImage!,height: 30,width: 30,fit: BoxFit.cover),
+        borderRadius:
+            BorderRadius.all(Radius.circular(PXBorderRadius.radiusXXL)),
+        child: Image.network(widget.model.titleImage!,
+            height: 30, width: 30, fit: BoxFit.cover),
       ),
     );
   }
-
 
   Widget heartButton() {
     return SizedBox(
@@ -274,11 +309,11 @@ class _DealCardState extends State<DealCard> {
       child: CupertinoButton(
         color: Colors.white,
         padding: EdgeInsets.zero,
-        borderRadius: const BorderRadius.all(Radius.circular(PXBorderRadius.radiusXXL)),
+        borderRadius:
+            const BorderRadius.all(Radius.circular(PXBorderRadius.radiusXXL)),
         child: Icon(
           globals.currentUserData.savedDeals != null &&
-              globals.currentUserData.savedDeals!
-                  .contains(widget.model.uid)
+                  globals.currentUserData.savedDeals!.contains(widget.model.uid)
               ? CupertinoIcons.heart_fill
               : CupertinoIcons.heart,
           color: PXColor.darkText,
@@ -290,31 +325,20 @@ class _DealCardState extends State<DealCard> {
             globals.currentUserData.savedDeals = [];
           }
 
-          if (!globals.currentUserData.savedDeals!
-              .contains(widget.model.uid)) {
-            globals.currentUserData.savedDeals!
-                .add(widget.model.uid!);
+          if (!globals.currentUserData.savedDeals!.contains(widget.model.uid)) {
+            globals.currentUserData.savedDeals!.add(widget.model.uid!);
           } else {
-            globals.currentUserData.savedDeals!
-                .remove(widget.model.uid!);
+            globals.currentUserData.savedDeals!.remove(widget.model.uid!);
           }
 
           setState(() => {
-            _databaseManager.setUserData(),
-          });
+                _databaseManager.setUserData(),
+              });
         },
       ),
     );
   }
-
-
 }
-
-
-
-
-
-
 
 // TODO: Extract to separate component
 class CompanyRating extends StatelessWidget {

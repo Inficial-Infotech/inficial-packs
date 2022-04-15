@@ -38,7 +38,8 @@ class CompanyIntro extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 3.0),
-                      child: Image.asset(PXImages.blackMarker,height: 15,width: 15, color: PXColor.textLight),
+                      child: Image.asset(PXImages.blackMarker,
+                          height: 15, width: 15, color: PXColor.textLight),
                     ),
                     SizedBox(width: PXSpacing.spacingXS),
                     Row(
@@ -47,7 +48,8 @@ class CompanyIntro extends StatelessWidget {
                           width: MediaQuery.of(context).size.width / 2,
                           child: Text(
                             '${this.model.address!.city!}, ${this.model.address!.country!}',
-                            style: PXTextStyle.styleSRegular.copyWith(color: PXColor.textLight),
+                            style: PXTextStyle.styleSRegular
+                                .copyWith(color: PXColor.textLight),
                           ),
                         ),
                       ],

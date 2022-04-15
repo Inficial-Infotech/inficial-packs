@@ -79,8 +79,10 @@ class PXSliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    if (title != null) Text(title!, style: PXTextStyle.pageTitle),
-                    if (subtitle != null) Text(subtitle!, style: PXTextStyle.styleMRegular),
+                    if (title != null)
+                      Text(title!, style: PXTextStyle.pageTitle),
+                    if (subtitle != null)
+                      Text(subtitle!, style: PXTextStyle.styleMRegular),
                     if (child != null)
                       Container(
                         color: debug ? PXColor.orange : PXColor.white,

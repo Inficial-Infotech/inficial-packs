@@ -69,7 +69,8 @@ class _MeetupsOverviewScreen extends State<MeetupsOverviewScreen> {
                           Navigator.push(
                             context,
                             CupertinoPageRoute(
-                              builder: (BuildContext ctx) => BlocProvider<MeetUpCubit>(
+                              builder: (BuildContext ctx) =>
+                                  BlocProvider<MeetUpCubit>(
                                 create: (BuildContext context) => MeetUpCubit(),
                                 child: const MeetupsAddCategoryScreen(),
                               ),
