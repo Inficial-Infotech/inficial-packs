@@ -5,6 +5,8 @@ import 'package:packs/constants/app_constants.dart';
 import 'package:packs/modules/meetups/cubit/meetup_cubit.dart';
 import 'package:packs/modules/meetups/repository/meetup_repository.dart';
 import 'package:packs/modules/meetups/screens/meetup_add_cover_image_screen.dart';
+import 'package:packs/widgets/components/range_slider.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class MeetupAddGenderAgeScreen extends StatefulWidget {
   const MeetupAddGenderAgeScreen({Key? key}) : super(key: key);
@@ -24,6 +26,7 @@ class _MeetupAddGenderAgeScreenState extends State<MeetupAddGenderAgeScreen> {
   final TextEditingController startAgeController = TextEditingController();
   final TextEditingController endAgeController = TextEditingController();
   final TextEditingController noOfPeopleController = TextEditingController();
+  SfRangeValues _values = const SfRangeValues(18.0, 25.0);
 
   @override
   void initState() {
@@ -64,29 +67,18 @@ class _MeetupAddGenderAgeScreenState extends State<MeetupAddGenderAgeScreen> {
                 padding: EdgeInsets.all(10.0),
                 child: Text('Start Age And End Age'),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  color: Colors.transparent,
-                  width: double.infinity,
-                  child: CupertinoTextField(
-                    keyboardType: TextInputType.number,
-                    controller: startAgeController,
-                    placeholder: 'Start Age',
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  color: Colors.transparent,
-                  width: double.infinity,
-                  child: CupertinoTextField(
-                    controller: endAgeController,
-                    keyboardType: TextInputType.number,
-                    placeholder: 'End Age',
-                  ),
-                ),
+              PXRangeSlider(
+                title: 'Age range',
+                icon: Icons.cake,
+                min: 0,
+                max: 100,
+                values: _values,
+                enableTooltip: true,
+                onChanged: (SfRangeValues values) {
+                  setState(() {
+                    _values = values;
+                  });
+                },
               ),
               const SizedBox(
                 height: 20,
@@ -105,15 +97,15 @@ class _MeetupAddGenderAgeScreenState extends State<MeetupAddGenderAgeScreen> {
               CupertinoButton.filled(
                 onPressed: () {
                   if (selectedValue.isEmpty ||
-                      startAgeController.text.isEmpty ||
-                      endAgeController.text.isEmpty ||
+                      _values.start.toString().isEmpty ||
+                      _values.end.toString().isEmpty ||
                       noOfPeopleController.text.isEmpty) {
                     return;
                   }
                   meetUpCubit.setGenderAndAeg(
                     selectedValue,
-                    int.parse(startAgeController.text),
-                    int.parse(endAgeController.text),
+                    double.parse(_values.start.toString()).toInt(),
+                    double.parse(_values.end.toString()).toInt(),
                     int.parse(noOfPeopleController.text),
                   );
                   navigateToMeetupAddCoverImageScreen(context);

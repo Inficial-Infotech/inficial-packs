@@ -3,20 +3,21 @@ import 'package:packs/constants/app_constants.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class PXRangeSlider extends StatefulWidget {
-  const PXRangeSlider({
-    required this.title,
-    this.icon,
-    required this.min,
-    required this.max,
-    required this.values,
-    required this.onChanged,
-  });
+  const PXRangeSlider(
+      {required this.title,
+      this.icon,
+      required this.min,
+      required this.max,
+      required this.values,
+      required this.onChanged,
+      this.enableTooltip = false});
 
   final String title;
   final IconData? icon;
   final double min;
   final double max;
   final SfRangeValues values;
+  final bool? enableTooltip;
   final Function(SfRangeValues values) onChanged;
 
   @override
@@ -57,8 +58,11 @@ class _PXRangeSliderState extends State<PXRangeSlider> {
               min: widget.min,
               max: widget.max,
               values: widget.values,
-              interval: widget.max / 2,
+              // interval: widget.max / 2,
               showLabels: true,
+              enableTooltip: widget.enableTooltip!,
+              tooltipShape: SfPaddleTooltipShape(),
+              stepSize: 1,
               activeColor: PXColor.neonGreen,
               inactiveColor: PXColor.lightGrey,
               onChanged: (SfRangeValues values) => widget.onChanged(values),

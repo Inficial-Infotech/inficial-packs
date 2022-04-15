@@ -29,7 +29,7 @@ class LoginState extends Equatable {
 
   String email;
   final String phone;
-   String name;
+  String name;
   final Country country;
   final bool loading;
   final List<Country> countries;
